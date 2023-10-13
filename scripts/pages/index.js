@@ -4,7 +4,6 @@ async function getPhotographers() {
         // Récupération du JSON
     const reponse = await fetch("./data/photographers.json");
     const photographers = await reponse.json();
-    console.log(photographers);
     return photographers;
 
     //     // Ceci est un exemple de données pour avoir un affichage de photographes de test dès le démarrage du projet, 
