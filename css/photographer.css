@@ -1,11 +1,38 @@
-#contact_modal {
-    display: none;
+/* Header */
+.photograph-header{
+    background-color: #FAFAFA;
+    /* height: 300px; */
+    margin: 0 100px;
+    display: flex;
+    padding: 55px 50px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+}
+.photograph-header h1{
+    color: #D3573C;
+    font-weight: 400;
+    font-size: 64px;
+    margin: 0;
+}
+.photograph-header .photographer-location{
+    font-size: 24px;
+    margin: 0 0 19px 0;
+}
+.photograph-header .photographer-tagline{
+    font-size: 18px;
+    color: #525252;
+    margin: 0;
+}
+.profile-picture{
+    border-radius: 50%;
+    max-width: 200px;
+    aspect-ratio: 1;
+    object-fit: cover;
 }
 
-.photograph-header {
-    background-color: #FAFAFA;
-    height: 300px;
-    margin: 0 100px;
+#contact_modal {
+    display: none;
 }
 
 .contact_button {
@@ -73,4 +100,52 @@ form input {
     height: 68px;
     border: none;
     border-radius: 5px;
+}
+
+/* Portfolio grid */
+.photographer-portfolio {
+    margin: 30px 100px;
+}
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px;
+}
+.media-article {
+    width: 100%;
+    overflow: hidden;
+}
+.media-article img, .media-article video {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+
+}
+.portoflio-item__infos{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.portoflio-item__infos p{
+    margin: 0;
+    font-size: 24px;
+    color: #901C1C;
+}
+
+.photographer-value{
+    position: fixed;
+    bottom: 0;
+    right: 40px;
+    background-color: #DB8876;
+    padding: 20px 32px 16px;
+    border-radius: 5px 5px 0 0;
+}
+.value-container{
+    display: flex;
+    gap: 65px;
+    align-items: center;
+    font-size: 24px;
+}
+.value-container p{
+    margin: 0;
 }
