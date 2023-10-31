@@ -102,31 +102,39 @@ function photographerTemplate(data) {
         const titleElement = document.createElement("p");
         titleElement.textContent = title;
         // Likes
-        const likesElement = document.createElement("i");
-        likesElement.classList.add("fa-solid", "fa-heart");
-        likesElement.setAttribute('style', 'color: #901C1C');
+        const likesElement = document.createElement("p");
+        likesElement.classList.add("portofolio-item__likes");
+        likesElement.textContent = likes;
+        const likesHeart = document.createElement("i");
+        likesHeart.classList.add("fa-solid", "fa-heart");
+        likesHeart.setAttribute('style', 'color: #901C1C');
 
         // DOM
         itemArticle.appendChild(mediaElement);
         itemArticle.appendChild(infos);
         infos.appendChild(titleElement);
         infos.appendChild(likesElement);
+        likesElement.appendChild(likesHeart);
         return itemArticle;
     }
 
-    function getValueDOM() {
+    function getValueDOM(sumLikes) {
         const valueDiv = document.createElement('div');
         valueDiv.classList.add("value-container");
         // Likes
-        const likesElement = document.createElement("i");
-        likesElement.classList.add("fa-solid", "fa-heart");
-        likesElement.setAttribute('style', 'color: black');
+        const likesElement = document.createElement("p");
+        likesElement.classList.add("value-likes");
+        likesElement.textContent = sumLikes;
+        const likesHeart = document.createElement("i");
+        likesHeart.classList.add("fa-solid", "fa-heart");
+        likesHeart.setAttribute('style', 'color: black');
         // Price
         const dailyPrice = document.createElement('p');
         dailyPrice.textContent = `${price}€ / jour`;
 
         // DOM
         valueDiv.appendChild(likesElement);
+        likesElement.appendChild(likesHeart);
         valueDiv.appendChild(dailyPrice);
         return valueDiv;
     }

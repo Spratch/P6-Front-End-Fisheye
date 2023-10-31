@@ -55,10 +55,15 @@ function displayMedias(medias) {
         portfolioGrid.appendChild(mediasGrid);
     });
 }
+function getPhotographerLikes(medias){
+    const totalLikes = medias.map(medias => medias.likes);
+    const sumLikes = totalLikes.reduce((a,b) => a + b, 0);
+    return sumLikes;
+}
 
-function displayValue(photographer) {
+function displayValue(photographer, sumLikes) {
     const valueDiv = document.querySelector(".photographer-value");
-    const valueContent = photographerTemplate(photographer).getValueDOM();
+    const valueContent = photographerTemplate(photographer).getValueDOM(sumLikes);
     valueDiv.appendChild(valueContent);
 }
 
@@ -69,7 +74,8 @@ async function init() {
     displayHeader(photographer);
     const medias = filterMedias(media, urlId);
     displayMedias(medias);
-    displayValue(photographer);
+    const sumLikes = getPhotographerLikes(medias);
+    displayValue(photographer, sumLikes);
 }
 
 init();
