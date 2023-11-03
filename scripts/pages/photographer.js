@@ -62,9 +62,9 @@ function getPhotographerLikes(medias){
 }
 
 function displayValue(photographer, sumLikes) {
-    const valueDiv = document.querySelector(".photographer-value");
+    const photographerValue = document.querySelector(".photographer-value");
     const valueContent = photographerTemplate(photographer).getValueDOM(sumLikes);
-    valueDiv.appendChild(valueContent);
+    photographerValue.appendChild(valueContent);
 }
 
 async function init() {
