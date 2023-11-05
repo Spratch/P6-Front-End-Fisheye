@@ -119,7 +119,12 @@ form textarea {
     resize: none;
     font-size: 24px;
     padding: 10px;
-    box-sizing: border-box;}
+    box-sizing: border-box;
+}
+
+form.submitted input:invalid, form.submitted textarea:invalid{
+    border: 2px solid red;
+}
 
 /* Portfolio grid */
 .photographer-portfolio {
