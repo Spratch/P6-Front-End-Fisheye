@@ -2,7 +2,6 @@ async function getPhotographers() {
     // Recuperation du JSON
     const reponse = await fetch("./data/photographers.json");
     const photographers = await reponse.json();
-    console.log(photographers);
     return photographers;
 }
 
@@ -11,14 +10,12 @@ function getUrlId() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const urlId = urlParams.get('id');
-    console.log(urlId);
     return urlId
 }
 
 function findPhotographer(photographers, urlId) {
     // Selection du photographe a partir de son id
     const photographer = photographers.find(item => item.id == urlId);
-    console.log(photographer);
     return photographer;
 }
 
@@ -39,22 +36,43 @@ function displayHeader(photographer) {
 function filterMedias(media, urlId) {
     // Selection des photos a partir de l'id du photographe
     const medias = media.filter(item => item.photographerId == urlId);
-    console.log(medias);
     return medias;
 }
 
 function displayMedias(medias) {
     // Recuperation des elements du DOM
     const portfolioGrid = document.querySelector(".portfolio-grid");
-    console.log(portfolioGrid);
 
     // Construction de la grille
     medias.forEach((media) => {
         const gridModel = photographerTemplate(media);
         const mediasGrid = gridModel.getPortfolioDOM();
         portfolioGrid.appendChild(mediasGrid);
+
+        mediasGrid.addEventListener('click', () => {
+            displayLightbox(media);
+        })
     });
 }
+
+function displayLightbox(media){
+    console.log(media);
+    // DOM
+    const lightboxModal = document.getElementById('lightbox_modal');
+    const lightboxMedia = document.getElementById('lightbox_media');
+
+    main.setAttribute("aria-hidden", "true"); // Hide main content for Assistive Technologies
+    lightboxModal.setAttribute("aria-hidden", "false"); // Show modal for AT
+    body.style.overflow = "hidden"; // Prevent scrolling
+    lightboxModal.style.display = "flex"; // Show modal
+
+    
+}
+
+function closeLightbox(){
+    
+}
+
 function getPhotographerLikes(medias){
     const totalLikes = medias.map(medias => medias.likes);
     const sumLikes = totalLikes.reduce((a,b) => a + b, 0);

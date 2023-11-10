@@ -40,7 +40,8 @@
     height: 100%;
     align-items: center;
     justify-content: center;
-    background-color: #C4C4C466;}
+    background-color: #C4C4C466;
+}
 
 .contact_button {
     font-size: 20px;
@@ -139,6 +140,7 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 .media-article {
     width: 100%;
     overflow: hidden;
+    cursor: pointer;
 }
 .media-article img, .media-article video {
     width: 100%;
@@ -181,4 +183,21 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 }
 .value-likes i{
     margin-left: 6px;
+}
+
+/* Lightbox */
+#lightbox_modal{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #C4C4C466;
+}
+#lightbox_modal .lightbox{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

@@ -76,11 +76,11 @@ function photographerTemplate(data) {
         return (img);
     }
 
-    function getMediaDOM(media){
-        const file = !media ? video : image;
-        const element = !media ? 'video' : 'img';
-        const attribut = !media ? 'muted' : 'alt';
-        const value = !media ? 'true' : title;
+    function getMediaDOM(image){
+        const file = !image ? video : image;
+        const element = !image ? 'video' : 'img';
+        const attribut = !image ? 'muted' : 'alt';
+        const value = !image ? 'true' : title;
 
         const mediaElement = document.createElement(element);
         mediaElement.setAttribute('src', `assets/images/${file}`);
@@ -92,9 +92,10 @@ function photographerTemplate(data) {
     function getPortfolioDOM() {
         const itemArticle = document.createElement('article');
         itemArticle.classList.add('media-article');
+        itemArticle.setAttribute("image-id", `${id}`);
+        itemArticle.setAttribute('aria-label', 'Vue détaillée');
         // Media
         const mediaElement = getMediaDOM(image);        
-
         // Infos
         const infos = document.createElement("div");
         infos.classList.add("portoflio-item__infos");
