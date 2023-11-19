@@ -44,9 +44,10 @@ function displayMedias(medias) {
     const portfolioGrid = document.querySelector(".portfolio-grid");
 
     // Construction de la grille
-    medias.forEach((media) => {
+    medias.forEach((media, i) => {
         const gridModel = photographerTemplate(media);
         const mediasGrid = gridModel.getPortfolioDOM();
+        mediasGrid.dataset.index = i;
         portfolioGrid.appendChild(mediasGrid);
 
         mediasGrid.addEventListener('click', () => {
@@ -56,7 +57,6 @@ function displayMedias(medias) {
 }
 
 function displayLightbox(media){
-    console.log(media);
     // DOM
     const lightboxModal = document.getElementById('lightbox_modal');
     const lightboxMedia = document.getElementById('lightbox_media');
@@ -66,10 +66,32 @@ function displayLightbox(media){
     body.style.overflow = "hidden"; // Prevent scrolling
     lightboxModal.style.display = "flex"; // Show modal
 
-    
+    const lightboxModel = photographerTemplate(media);
+    const mediaLightbox = lightboxModel.getLightboxDOM();
+    lightboxMedia.appendChild(mediaLightbox);
+
+    document.addEventListener('keydown', e => {
+        if (e.key === "Escape" || e.code === 27){
+            console.log("escape pressed")
+            closeLightbox();
+        }
+    });
 }
 
 function closeLightbox(){
+    // DOM
+    const lightboxModal = document.getElementById('lightbox_modal');
+    const lightboxMedia = document.getElementById('lightbox_media');
+
+    main.setAttribute("aria-hidden", "false"); // reveal main content for Assistive Technologies
+    lightboxModal.setAttribute("aria-hidden", "true"); // hide modal for AT
+    body.style.overflow = "auto"; // Allow scrolling
+    lightboxModal.style.display = "none"; // Hide modal
+    
+    lightboxMedia.innerHTML = ''; // Resetting the lightbox content
+}
+
+function lightboxPrev(){
     
 }
 

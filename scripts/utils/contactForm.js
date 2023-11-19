@@ -25,7 +25,7 @@ function closeModal() {
     modal.setAttribute("aria-hidden", "true"); // Show modal for AT
     body.style.overflow = "auto"; // Prevent scrolling
 	modal.style.display = "none"; // Show modal
-    modalOpenBtn.focus(); // Focus on close button
+    modalOpenBtn.focus(); // Focus on open button
 }
 
 // Press Escape to close modal
@@ -43,14 +43,16 @@ function submitForm() {
     // Color invalid inputs
     contactForm.classList.add("submitted");
 
-    // Submit datas
-    let formDatas = {
-        firstName: first.value,
-        lastName: last.value,
-        email: email.value,
-        message: message.value
+    if (contactForm.checkValidity()) {
+        // Submit datas
+        let formDatas = {
+            firstName: first.value,
+            lastName: last.value,
+            email: email.value,
+            message: message.value
+        }
+        console.log(formDatas);
     }
-    console.log(formDatas);
 }
 
 contactForm.addEventListener("submit", (event) => {

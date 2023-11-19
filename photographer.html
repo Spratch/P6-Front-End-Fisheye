@@ -56,9 +56,9 @@
 
     <div id="lightbox_modal" aria-hidden="true" role="dialog" aria-label="Vue rapprochée de l'image" aria-hidden="true">
       <div class="lightbox">
-        <button class="lightbox-prev"></button>
-        <button class="lightbox-next"></button>
-        <button class="lightbox-close"></button>
+        <button class="lightbox-prev">Prev</button>
+        <button class="lightbox-next">Next</button>
+        <button class="lightbox-close" onclick="closeLightbox()">x</button>
         <div id="lightbox_media"></div>
       </div>
     </div>
@@ -66,6 +66,5 @@
     <script src="/scripts/pages/photographer.js"></script>
     <script src="/scripts/templates/photographer.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
-    <script src="/scripts/utils/lightbox.js" defer></script>
   </body>
 </html>

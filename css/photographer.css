@@ -188,7 +188,7 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 /* Lightbox */
 #lightbox_modal{
     display: none;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -200,4 +200,9 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+.lightbox-media-container img, .lightbox-media-container video{
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: scale-down;
 }

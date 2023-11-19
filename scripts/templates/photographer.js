@@ -92,7 +92,6 @@ function photographerTemplate(data) {
     function getPortfolioDOM() {
         const itemArticle = document.createElement('article');
         itemArticle.classList.add('media-article');
-        itemArticle.setAttribute("image-id", `${id}`);
         itemArticle.setAttribute('aria-label', 'Vue détaillée');
         // Media
         const mediaElement = getMediaDOM(image);        
@@ -140,5 +139,16 @@ function photographerTemplate(data) {
         return valueDiv;
     }
 
-    return { name, picture, getUserCardDOM, getProfileDOM, getProfilePic, getPortfolioDOM, getValueDOM }
+    function getLightboxDOM() {
+        const mediaParent = document.createElement("div");
+        mediaParent.classList.add("lightbox-media-container");
+        // media
+        const mediaElement = getMediaDOM(image);
+        mediaParent.appendChild(mediaElement);
+
+
+        return mediaParent;
+    }
+
+    return { name, picture, getUserCardDOM, getProfileDOM, getProfilePic, getPortfolioDOM, getValueDOM, getLightboxDOM }
 }
