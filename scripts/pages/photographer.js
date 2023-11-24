@@ -51,12 +51,12 @@ function displayMedias(medias) {
         portfolioGrid.appendChild(mediasGrid);
 
         mediasGrid.addEventListener('click', () => {
-            displayLightbox(media);
+            displayLightbox(media, i, medias);
         })
     });
 }
 
-function displayLightbox(media){
+function displayLightbox(media, i, medias){
     // DOM
     const lightboxModal = document.getElementById('lightbox_modal');
     const lightboxMedia = document.getElementById('lightbox_media');
@@ -67,36 +67,85 @@ function displayLightbox(media){
     lightboxModal.style.display = "flex"; // Show modal
 
     const lightboxModel = photographerTemplate(media);
-    const mediaLightbox = lightboxModel.getLightboxDOM();
+    const mediaLightbox = lightboxModel.getLightboxDOM(i);
     lightboxMedia.appendChild(mediaLightbox);
 
-    document.addEventListener('keydown', e => {
-        if (e.key === "Escape" || e.code === 27){
-            console.log("escape pressed")
-            closeLightbox();
+    // Buttons
+    const arrowPrev = document.querySelector(".lightbox-prev");
+    const arrowNext = document.querySelector(".lightbox-next");
+
+    arrowPrev.addEventListener("click", () => {
+        console.log("button pressed");
+        lightboxPrev(i, medias);
+    }, { once: true });
+
+    arrowNext.addEventListener("click", () => {
+        console.log("button pressed");
+        lightboxNext(i, medias);
+    }, { once: true });
+
+    // Keyboard
+    function keydownHandler(e) {
+        switch (e.key){
+            case 'Escape':
+            case 'Esc':
+                closeLightbox();
+                break;
+            case 'ArrowLeft':
+                console.log("key pressed");
+                lightboxPrev(i, medias);
+                break;
+            case 'ArrowRight':
+                console.log("key pressed");
+                lightboxNext(i, medias);
+                break;
         }
-    });
+    }
+    document.addEventListener('keydown', keydownHandler, { once: true});
 }
 
 function closeLightbox(){
     // DOM
     const lightboxModal = document.getElementById('lightbox_modal');
-    const lightboxMedia = document.getElementById('lightbox_media');
 
     main.setAttribute("aria-hidden", "false"); // reveal main content for Assistive Technologies
     lightboxModal.setAttribute("aria-hidden", "true"); // hide modal for AT
     body.style.overflow = "auto"; // Allow scrolling
     lightboxModal.style.display = "none"; // Hide modal
     
-    lightboxMedia.innerHTML = ''; // Resetting the lightbox content
+    resetLightboxMedia();
 }
 
-function lightboxPrev(){
-    
+function resetLightboxMedia() {
+    const lightboxMedia = document.getElementById('lightbox_media');
+    lightboxMedia.innerHTML = '';
+}
+
+
+function lightboxPrev(currentIndex, medias){
+    // Subtract 1 to get the index of the previous media
+    const prevIndex = (currentIndex - 1 + medias.length) % medias.length;
+        
+    // Reset lightbox content
+    resetLightboxMedia();
+
+    // Display previous media
+    displayLightbox(medias[prevIndex], prevIndex, medias);    
+}
+
+function lightboxNext(currentIndex, medias){
+    // Add 1 to get the index of the next media
+    const nextIndex = (currentIndex + 1 + medias.length) % medias.length;
+
+    // Reset lightbox content
+    resetLightboxMedia();
+
+    // Display next media
+    displayLightbox(medias[nextIndex], nextIndex, medias);
 }
 
 function getPhotographerLikes(medias){
-    const totalLikes = medias.map(medias => medias.likes);
+    const totalLikes = medias.map(media => media.likes);
     const sumLikes = totalLikes.reduce((a,b) => a + b, 0);
     return sumLikes;
 }

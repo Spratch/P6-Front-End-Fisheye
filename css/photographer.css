@@ -148,20 +148,20 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     object-fit: cover;
 
 }
-.portoflio-item__infos{
+.portfolio-item__infos{
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.portoflio-item__infos p{
+.portfolio-item__infos p{
     margin: 0;
     font-size: 24px;
     color: #901C1C;
 }
-.portoflio-item__likes{
+.portfolio-item__likes{
     font-weight: 500;
 }
-.portoflio-item__infos i{
+.portfolio-item__infos i{
     margin-left: 6px;
 }
 .photographer-value{
@@ -194,15 +194,27 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     width: 100%;
     height: 100%;
     background-color: #C4C4C466;
+    justify-content: center;
+    align-items: center;
 }
-#lightbox_modal .lightbox{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+#lightbox_modal .lightbox {
+    margin: 50px;
+    width: calc(100% - 100px);
+    height: calc(100% - 100px);
 }
-.lightbox-media-container img, .lightbox-media-container video{
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: scale-down;
+#lightbox_media {
+    position: relative;
+    width: 100%;
+}
+.lightbox-media-container {
+    max-width: 85%;
+    width: fit-content;
+    margin: 0 auto;
+}
+.lightbox-media-container img, .lightbox-media-container video {
+    width: 100%;
+    max-height: 85vh;
+}
+.lightbox .buttons-line{
+    display: flex;
 }

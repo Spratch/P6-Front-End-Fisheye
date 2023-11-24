@@ -76,7 +76,7 @@ function photographerTemplate(data) {
         return (img);
     }
 
-    function getMediaDOM(image){
+    function getMediaDOM(image, fromLightbox){
         const file = !image ? video : image;
         const element = !image ? 'video' : 'img';
         const attribut = !image ? 'muted' : 'alt';
@@ -85,6 +85,10 @@ function photographerTemplate(data) {
         const mediaElement = document.createElement(element);
         mediaElement.setAttribute('src', `assets/images/${file}`);
         mediaElement.setAttribute(attribut, value);
+        if (!image && fromLightbox) {
+            mediaElement.setAttribute('controls', 'true');
+            mediaElement.setAttribute('autoplay', 'true');
+        }
         return mediaElement;
     }
     
@@ -97,7 +101,7 @@ function photographerTemplate(data) {
         const mediaElement = getMediaDOM(image);        
         // Infos
         const infos = document.createElement("div");
-        infos.classList.add("portoflio-item__infos");
+        infos.classList.add("portfolio-item__infos");
         // Image title
         const titleElement = document.createElement("p");
         titleElement.textContent = title;
@@ -142,10 +146,16 @@ function photographerTemplate(data) {
     function getLightboxDOM() {
         const mediaParent = document.createElement("div");
         mediaParent.classList.add("lightbox-media-container");
-        // media
-        const mediaElement = getMediaDOM(image);
-        mediaParent.appendChild(mediaElement);
+        // Media
+        const fromLightbox = true;
+        const mediaElement = getMediaDOM(image, fromLightbox);
+        // Media Title
+        const mediaTitle = document.createElement("p");
+        mediaTitle.textContent = title;
 
+        // DOM
+        mediaParent.appendChild(mediaElement);
+        mediaParent.appendChild(mediaTitle);
 
         return mediaParent;
     }
