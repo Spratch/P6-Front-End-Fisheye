@@ -143,12 +143,10 @@ function photographerTemplate(data) {
         return valueDiv;
     }
 
-    function getLightboxDOM() {
+    function getLightboxDOM(i, mediaElement) {
         const mediaParent = document.createElement("div");
         mediaParent.classList.add("lightbox-media-container");
-        // Media
-        const fromLightbox = true;
-        const mediaElement = getMediaDOM(image, fromLightbox);
+        
         // Media Title
         const mediaTitle = document.createElement("p");
         mediaTitle.textContent = title;
@@ -160,5 +158,5 @@ function photographerTemplate(data) {
         return mediaParent;
     }
 
-    return { name, picture, getUserCardDOM, getProfileDOM, getProfilePic, getPortfolioDOM, getValueDOM, getLightboxDOM }
+    return { name, picture, getUserCardDOM, getProfileDOM, getProfilePic, getMediaDOM, getPortfolioDOM, getValueDOM, getLightboxDOM }
 }

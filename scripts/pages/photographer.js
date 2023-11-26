@@ -35,8 +35,8 @@ function displayHeader(photographer) {
 
 function filterMedias(media, urlId) {
     // Selection des photos a partir de l'id du photographe
-    const medias = media.filter(item => item.photographerId == urlId);
-    return medias;
+    const photographerMedias = media.filter(item => item.photographerId == urlId);
+    return photographerMedias;
 }
 
 function displayMedias(medias) {
@@ -47,101 +47,12 @@ function displayMedias(medias) {
     medias.forEach((media, i) => {
         const gridModel = photographerTemplate(media);
         const mediasGrid = gridModel.getPortfolioDOM();
-        mediasGrid.dataset.index = i;
         portfolioGrid.appendChild(mediasGrid);
 
         mediasGrid.addEventListener('click', () => {
             displayLightbox(media, i, medias);
         })
     });
-}
-
-function displayLightbox(media, i, medias){
-    // DOM
-    const lightboxModal = document.getElementById('lightbox_modal');
-    const lightboxMedia = document.getElementById('lightbox_media');
-
-    main.setAttribute("aria-hidden", "true"); // Hide main content for Assistive Technologies
-    lightboxModal.setAttribute("aria-hidden", "false"); // Show modal for AT
-    body.style.overflow = "hidden"; // Prevent scrolling
-    lightboxModal.style.display = "flex"; // Show modal
-
-    const lightboxModel = photographerTemplate(media);
-    const mediaLightbox = lightboxModel.getLightboxDOM(i);
-    lightboxMedia.appendChild(mediaLightbox);
-
-    // Buttons
-    const arrowPrev = document.querySelector(".lightbox-prev");
-    const arrowNext = document.querySelector(".lightbox-next");
-
-    arrowPrev.addEventListener("click", () => {
-        console.log("button pressed");
-        lightboxPrev(i, medias);
-    }, { once: true });
-
-    arrowNext.addEventListener("click", () => {
-        console.log("button pressed");
-        lightboxNext(i, medias);
-    }, { once: true });
-
-    // Keyboard
-    function keydownHandler(e) {
-        switch (e.key){
-            case 'Escape':
-            case 'Esc':
-                closeLightbox();
-                break;
-            case 'ArrowLeft':
-                console.log("key pressed");
-                lightboxPrev(i, medias);
-                break;
-            case 'ArrowRight':
-                console.log("key pressed");
-                lightboxNext(i, medias);
-                break;
-        }
-    }
-    document.addEventListener('keydown', keydownHandler, { once: true});
-}
-
-function closeLightbox(){
-    // DOM
-    const lightboxModal = document.getElementById('lightbox_modal');
-
-    main.setAttribute("aria-hidden", "false"); // reveal main content for Assistive Technologies
-    lightboxModal.setAttribute("aria-hidden", "true"); // hide modal for AT
-    body.style.overflow = "auto"; // Allow scrolling
-    lightboxModal.style.display = "none"; // Hide modal
-    
-    resetLightboxMedia();
-}
-
-function resetLightboxMedia() {
-    const lightboxMedia = document.getElementById('lightbox_media');
-    lightboxMedia.innerHTML = '';
-}
-
-
-function lightboxPrev(currentIndex, medias){
-    // Subtract 1 to get the index of the previous media
-    const prevIndex = (currentIndex - 1 + medias.length) % medias.length;
-        
-    // Reset lightbox content
-    resetLightboxMedia();
-
-    // Display previous media
-    displayLightbox(medias[prevIndex], prevIndex, medias);    
-}
-
-function lightboxNext(currentIndex, medias){
-    // Add 1 to get the index of the next media
-    const nextIndex = (currentIndex + 1 + medias.length) % medias.length;
-
-    // Reset lightbox content
-    resetLightboxMedia();
-
-    // Display next media
-    displayLightbox(medias[nextIndex], nextIndex, medias);
 }
 
 function getPhotographerLikes(medias){
@@ -161,11 +72,106 @@ async function init() {
     const urlId = getUrlId();
     const photographer = findPhotographer(photographers, urlId);
     displayHeader(photographer);
-    const medias = filterMedias(media, urlId);
-    displayMedias(medias);
-    const sumLikes = getPhotographerLikes(medias);
+    const photographerMedias = filterMedias(media, urlId);
+    displayMedias(photographerMedias);
+    const sumLikes = getPhotographerLikes(photographerMedias);
     displayValue(photographer, sumLikes);
 }
 
 init();
 
+function setLightboxMedia(mediaToDisplay, mediaIndex, medias) {
+    const image = medias[mediaIndex].image;
+
+    const fromLightbox = true;
+    const lightboxModel = photographerTemplate(mediaToDisplay);
+    const mediaElement = lightboxModel.getMediaDOM(image, fromLightbox);
+
+    return mediaElement;
+}
+
+function displayLightbox(media, i, medias) {
+    const lightboxModal = document.getElementById('lightbox_modal');
+    const lightboxMedia = document.getElementById('lightbox_media');
+
+    main.setAttribute("aria-hidden", "true");
+    lightboxModal.setAttribute("aria-hidden", "false");
+    body.style.overflow = "hidden";
+    lightboxModal.style.display = "flex";
+
+    const mediaElement = setLightboxMedia(media, i, medias);
+    const lightboxModel = photographerTemplate(media);
+    const mediaLightbox = lightboxModel.getLightboxDOM(i, mediaElement);
+    lightboxMedia.appendChild(mediaLightbox);
+
+    currentIndex = i;  // Set currentIndex when opening the lightbox
+
+    const arrowPrev = document.querySelector(".lightbox-prev");
+    const arrowNext = document.querySelector(".lightbox-next");
+
+    arrowPrev.addEventListener("click", () => {
+        console.log("button pressed");
+        lightboxPrev(medias);
+    });
+    arrowNext.addEventListener("click", () => {
+        console.log("button pressed");
+        lightboxNext(medias);
+    });
+
+    function keydownHandler(e) {
+        switch (e.key) {
+            case 'Escape':
+            case 'Esc':
+                closeLightbox();
+                break;
+            case 'ArrowLeft':
+                console.log("left key pressed");
+                lightboxPrev(medias);
+                break;
+            case 'ArrowRight':
+                console.log("right key pressed");
+                lightboxNext(medias);
+                break;
+        }
+    }
+    document.addEventListener('keydown', keydownHandler);
+}
+
+function resetLightboxMedia() {
+    const lightboxMedia = document.getElementById('lightbox_media');
+    lightboxMedia.innerHTML = '';
+}
+
+function closeLightbox(){
+    // DOM
+    const lightboxModal = document.getElementById('lightbox_modal');
+
+    main.setAttribute("aria-hidden", "false"); // reveal main content for Assistive Technologies
+    lightboxModal.setAttribute("aria-hidden", "true"); // hide modal for AT
+    body.style.overflow = "auto"; // Allow scrolling
+    lightboxModal.style.display = "none"; // Hide modal
+    
+    resetLightboxMedia();
+}
+
+function lightboxPrev(medias) {
+    const lightboxMedia = document.getElementById('lightbox_media');
+    resetLightboxMedia();
+    currentIndex = (currentIndex - 1 + medias.length) % medias.length;
+    const mediaElement = setLightboxMedia(medias[currentIndex], currentIndex, medias);
+    const lightboxModel = photographerTemplate(medias[currentIndex]);
+    const mediaLightbox = lightboxModel.getLightboxDOM(currentIndex, mediaElement);
+    lightboxMedia.appendChild(mediaLightbox);
+}
+
+function lightboxNext(medias) {
+    const lightboxMedia = document.getElementById('lightbox_media');
+    resetLightboxMedia();
+    currentIndex = (currentIndex + 1 + medias.length) % medias.length;
+    const mediaElement = setLightboxMedia(medias[currentIndex], currentIndex, medias);
+    const lightboxModel = photographerTemplate(medias[currentIndex]);
+    const mediaLightbox = lightboxModel.getLightboxDOM(currentIndex, mediaElement);
+    lightboxMedia.appendChild(mediaLightbox);
+}
+
+// https://www.figma.com/file/liUwMx1Nqqcl8BgUqE5j9W/P6?type=whiteboard&node-id=0%3A1&t=irGpXMaSoR9OPbnQ-1

@@ -217,4 +217,6 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 }
 .lightbox .buttons-line{
     display: flex;
+    width: 100%;
+    justify-content: center;
 }
