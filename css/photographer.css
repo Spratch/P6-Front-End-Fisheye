@@ -110,7 +110,8 @@ form input {
     border-radius: 5px;
     font-size: 24px;
     padding: 0 10px;
-    box-sizing: border-box;}
+    box-sizing: border-box;
+}
 
 form textarea {
     width: 100%;
@@ -201,6 +202,9 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     margin: 50px;
     width: calc(100% - 100px);
     height: calc(100% - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 #lightbox_media {
     position: relative;
@@ -215,8 +219,34 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     width: 100%;
     max-height: 85vh;
 }
-.lightbox .buttons-line{
+.lightbox__buttons{
+    position: absolute;
+    width: calc(100% - 100px);
+    height: calc(100% - 100px);
+}
+.lightbox__buttons>*{
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    font-size: 35px;
+    color: #901C1C;
+    cursor: pointer;
+    padding: 0;
+}
+.lightbox__buttons--prev, .lightbox__buttons--next{
+    top: 0;
+    bottom: 0;
     display: flex;
-    width: 100%;
-    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+.lightbox__buttons--prev{
+    left: 0;
+}
+.lightbox__buttons--next{
+    right: 0;
+}
+.lightbox__buttons--close{
+    right: 0;
+    z-index: 2;
 }
