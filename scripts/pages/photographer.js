@@ -1,79 +1,78 @@
 async function getPhotographers() {
-    // Recuperation du JSON
-    const reponse = await fetch("./data/photographers.json");
-    const photographers = await reponse.json();
-    return photographers;
+    // JSON Fetch
+    const response = await fetch("./data/photographers.json");
+    return response.json();
 }
 
 function getUrlId() {
-    // Recuperation de l'id du photographe
+    // Retrieving the photographer's ID
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const urlId = urlParams.get('id');
-    return urlId
+    return urlParams.get('id');
 }
 
 function findPhotographer(photographers, urlId) {
-    // Selection du photographe a partir de son id
-    const photographer = photographers.find(item => item.id == urlId);
-    return photographer;
+    // Selection of the photographer based on his ID
+    return photographers.find(item => item.id == urlId);
 }
 
 function displayHeader(photographer) {
-    // Recuperation des elements du DOM
+    // DOM elements
     const photographHeader = document.querySelector(".photograph-header");
     const contactButton = document.querySelector(".contact_button");
 
-    // Construction du header
-    const photographerModel = photographerTemplate(photographer);
-    const profile = photographerModel.getProfileDOM();
-    photographHeader.insertBefore(profile, contactButton);
-
-    const profilePic = photographerModel.getProfilePic();
-    photographHeader.appendChild(profilePic);
+    // Header construction
+    const { getProfileDOM, getProfilePic } = photographerTemplate(photographer);
+    photographHeader.insertBefore(getProfileDOM(), contactButton);
+    photographHeader.appendChild(getProfilePic());
 }
 
 function filterMedias(media, urlId) {
-    // Selection des photos a partir de l'id du photographe
-    const photographerMedias = media.filter(item => item.photographerId == urlId);
-    return photographerMedias;
+    // Selection of medias based on the photographer's ID
+    return media.filter(item => item.photographerId == urlId);
 }
 
-function displayMedias(medias) {
-    // Recuperation des elements du DOM
+function displayMedias(photographerMedias) {
+    // DOM elements
     const portfolioGrid = document.querySelector(".portfolio-grid");
 
-    // Construction de la grille
-    medias.forEach((media, i) => {
-        const gridModel = photographerTemplate(media);
-        const mediasGrid = gridModel.getPortfolioDOM();
+    // Grid construction
+    photographerMedias.forEach((media, i) => {
+        const { getPortfolioDOM } = photographerTemplate(media);
+        const mediasGrid = getPortfolioDOM();
         portfolioGrid.appendChild(mediasGrid);
 
         mediasGrid.addEventListener('click', () => {
-            displayLightbox(media, i, medias);
+            displayLightbox(media, i, photographerMedias);
         })
     });
 }
 
 function getPhotographerLikes(medias){
+    // Calculate total number of photographer's likes
     const totalLikes = medias.map(media => media.likes);
-    const sumLikes = totalLikes.reduce((a,b) => a + b, 0);
-    return sumLikes;
+    return totalLikes.reduce((a,b) => a + b, 0);
 }
 
 function displayValue(photographer, sumLikes) {
+    // DOM Element
     const photographerValue = document.querySelector(".photographer-value");
-    const valueContent = photographerTemplate(photographer).getValueDOM(sumLikes);
-    photographerValue.appendChild(valueContent);
+
+    // Value content construction
+    const { getValueDOM } = photographerTemplate(photographer);
+    photographerValue.appendChild(getValueDOM(sumLikes));
 }
 
 async function init() {
     const { photographers, media } = await getPhotographers();
     const urlId = getUrlId();
     const photographer = findPhotographer(photographers, urlId);
+
     displayHeader(photographer);
+
     const photographerMedias = filterMedias(media, urlId);
     displayMedias(photographerMedias);
+
     const sumLikes = getPhotographerLikes(photographerMedias);
     displayValue(photographer, sumLikes);
 }
@@ -106,8 +105,8 @@ function displayLightbox(media, i, medias) {
 
     currentIndex = i;  // Set currentIndex when opening the lightbox
 
-    const arrowPrev = document.querySelector(".lightbox-prev");
-    const arrowNext = document.querySelector(".lightbox-next");
+    const arrowPrev = document.querySelector(".lightbox__buttons--prev");
+    const arrowNext = document.querySelector(".lightbox__buttons--next");
 
     arrowPrev.addEventListener("click", () => {
         console.log("button pressed");
