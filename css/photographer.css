@@ -40,7 +40,7 @@
     height: 100%;
     align-items: center;
     justify-content: center;
-    background-color: #C4C4C466;
+    background-color: #5a5a5abf;
 }
 
 .contact_button {
@@ -194,7 +194,7 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #C4C4C466;
+    background-color: #5a5a5abf;
     justify-content: center;
     align-items: center;
 }
@@ -214,10 +214,15 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     max-width: 85%;
     width: fit-content;
     margin: 0 auto;
+    background-color: #FAFAFA;
 }
 .lightbox-media-container img, .lightbox-media-container video {
     width: 100%;
     max-height: 85vh;
+}
+.lightbox-media-container p{
+    margin: 0;
+    padding: 12px;
 }
 .lightbox__buttons{
     position: absolute;
