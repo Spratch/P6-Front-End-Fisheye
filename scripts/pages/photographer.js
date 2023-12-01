@@ -42,7 +42,7 @@ function displayMedias(photographerMedias) {
         const mediasGrid = getPortfolioDOM();
         portfolioGrid.appendChild(mediasGrid);
 
-        mediasGrid.addEventListener('click', () => {
+        mediasGrid.firstChild.addEventListener('click', () => {
             displayLightbox(media, i, photographerMedias);
         })
     });
@@ -63,21 +63,6 @@ function displayValue(photographer, sumLikes) {
     photographerValue.appendChild(getValueDOM(sumLikes));
 }
 
-async function init() {
-    const { photographers, media } = await getPhotographers();
-    const urlId = getUrlId();
-    const photographer = findPhotographer(photographers, urlId);
-
-    displayHeader(photographer);
-
-    const photographerMedias = filterMedias(media, urlId);
-    displayMedias(photographerMedias);
-
-    const sumLikes = getPhotographerLikes(photographerMedias);
-    displayValue(photographer, sumLikes);
-}
-
-init();
 
 function setLightboxMedia(mediaToDisplay, mediaIndex, medias) {
     const image = medias[mediaIndex].image;
@@ -109,11 +94,9 @@ function displayLightbox(media, i, medias) {
     const arrowNext = document.querySelector(".lightbox__buttons--next");
 
     arrowPrev.addEventListener("click", () => {
-        console.log("button pressed");
         lightboxPrev(medias);
     });
     arrowNext.addEventListener("click", () => {
-        console.log("button pressed");
         lightboxNext(medias);
     });
 
@@ -124,11 +107,9 @@ function displayLightbox(media, i, medias) {
                 closeLightbox();
                 break;
             case 'ArrowLeft':
-                console.log("left key pressed");
                 lightboxPrev(medias);
                 break;
             case 'ArrowRight':
-                console.log("right key pressed");
                 lightboxNext(medias);
                 break;
         }
@@ -172,5 +153,22 @@ function lightboxNext(medias) {
     const mediaLightbox = lightboxModel.getLightboxDOM(currentIndex, mediaElement);
     lightboxMedia.appendChild(mediaLightbox);
 }
+
+async function init() {
+    const { photographers, media } = await getPhotographers();
+    const urlId = getUrlId();
+    const photographer = findPhotographer(photographers, urlId);
+
+    displayHeader(photographer);
+
+    const photographerMedias = filterMedias(media, urlId);
+    displayMedias(photographerMedias);
+
+    const sumLikes = getPhotographerLikes(photographerMedias);
+    displayValue(photographer, sumLikes);
+}
+
+init();
+
 
 // https://www.figma.com/file/liUwMx1Nqqcl8BgUqE5j9W/P6?type=whiteboard&node-id=0%3A1&t=irGpXMaSoR9OPbnQ-1

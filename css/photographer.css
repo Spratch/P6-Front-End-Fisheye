@@ -141,13 +141,12 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 .media-article {
     width: 100%;
     overflow: hidden;
-    cursor: pointer;
 }
 .media-article img, .media-article video {
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
-
+    cursor: pointer;
 }
 .portfolio-item__infos{
     display: flex;
@@ -157,13 +156,21 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 .portfolio-item__infos p{
     margin: 0;
     font-size: 24px;
+    line-height: 1;
     color: #901C1C;
 }
 .portfolio-item__likes{
     font-weight: 500;
+    display: flex;
 }
-.portfolio-item__infos i{
+.portfolio-item__likes i{
     margin-left: 6px;
+    cursor: pointer;
+    opacity: 0.5;
+    font-size: 22px;
+}
+.portfolio-item__likes i.liked{
+    opacity: 1;
 }
 .photographer-value{
     position: fixed;
@@ -182,8 +189,14 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 .value-container p{
     margin: 0;
 }
+.likes-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .value-likes i{
     margin-left: 6px;
+    font-size: 22px;
 }
 
 /* Lightbox */

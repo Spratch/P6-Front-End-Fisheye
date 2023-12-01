@@ -1,23 +1,5 @@
-// DOM elements creation with type of tag, table of attributes, and textContent
-function createDOMElement(tag, attributes = {}, textContent) {
-    // Tag
-    const element = document.createElement(tag);
-
-    // Attributes
-    for (const [key, value] of Object.entries(attributes)) {
-        element.setAttribute(key, value);
-    }
-
-    // Text
-    if (textContent) {
-        element.textContent = textContent;
-    }
-
-    return element;
-}
-
 function photographerTemplate(data) {
-    const { name, portrait, id, city, country, tagline, price, title, image, video, likes } = data;
+    let { name, portrait, id, city, country, tagline, price, title, image, video, likes } = data;
 
     const picture = `assets/photographers/${portrait}`;
 
@@ -84,27 +66,50 @@ function photographerTemplate(data) {
         const mediaElement = getMediaDOM(image);        
         const infos = createDOMElement('div', { class: 'portfolio-item__infos' });
         const titleElement = createDOMElement('p', {}, title);
-        const likesNumber = createDOMElement('p', { class: 'portofolio-item__likes' }, likes);
+        const likesContainer = createDOMElement('div', { class: 'portfolio-item__likes' });
+        const likesNumber = createDOMElement('p', {}, likes);
         const likesHeart = createDOMElement('i', { class: 'fa-solid fa-heart', style: 'color: #901C1C' });
+
+        likesHeart.addEventListener("click", () => {
+            // Get DOM Element
+            const totalLikesElement = document.getElementsByClassName('value-likes');
+            totalLikes = parseInt(totalLikesElement[0].innerText);
+
+            if (!likesHeart.classList.contains("liked")) {
+                likes++;
+                totalLikes++;
+                console.log(totalLikes)
+                totalLikesElement[0].innerText = totalLikes;
+            } else {
+                likes--;
+                totalLikes--;
+                console.log(totalLikes)
+                totalLikesElement[0].innerText = totalLikes;
+            }
+
+            likesHeart.classList.toggle("liked");
+            likesNumber.textContent = likes;
+        });
 
         // DOM Generation
         itemArticle.append(mediaElement, infos);
-        infos.append(titleElement, likesNumber);
-        likesNumber.append(likesHeart);
-
+        infos.append(titleElement, likesContainer);
+        likesContainer.append(likesNumber, likesHeart);
+    
         return itemArticle;
     }
 
     function getValueDOM(sumLikes) {
         // DOM Elements creation
         const valueDiv = createDOMElement('div', { class: 'value-container' });
+        const likesContainer = createDOMElement('div', {class: 'likes-container'});
         const likesNumber = createDOMElement('p', { class: 'value-likes' }, sumLikes);
         const likesHeart = createDOMElement('i', { class: 'fa-solid fa-heart', style: 'color: black' });
         const dailyPrice = createDOMElement('p', {}, `${price}€ / jour`);
 
         // DOM Generation
-        valueDiv.append(likesNumber, dailyPrice);
-        likesNumber.appendChild(likesHeart);
+        valueDiv.append(likesContainer, dailyPrice);
+        likesContainer.append(likesNumber, likesHeart);
 
         return valueDiv;
     }
