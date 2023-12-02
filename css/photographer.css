@@ -8,6 +8,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 50px;
+    border-radius: 5px;
 }
 .photograph-header h1{
     color: #D3573C;
@@ -134,19 +135,24 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 }
 .portfolio-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    column-gap: 90px;
-    row-gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px 90px;
+    justify-content: space-between;
 }
+
 .media-article {
     width: 100%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .media-article img, .media-article video {
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
     cursor: pointer;
+    border-radius: 5px;
 }
 .portfolio-item__infos{
     display: flex;
@@ -228,6 +234,8 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     width: fit-content;
     margin: 0 auto;
     background-color: #FAFAFA;
+    border-radius: 5px;
+    overflow: hidden;
 }
 .lightbox-media-container img, .lightbox-media-container video {
     width: 100%;
@@ -236,6 +244,8 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 .lightbox-media-container p{
     margin: 0;
     padding: 12px;
+    font-size: 24px;
+    color: #901C1C;
 }
 .lightbox__buttons{
     position: absolute;
