@@ -20,7 +20,16 @@
         <button class="contact_button" onclick="displayModal()" id="modalOpenBtn">Contactez-moi</button>
       </div>
       <div class="photographer-portfolio">
-        <div class="sorting">Trier par</div>
+        <div class="sorting">Trier par 
+          <div class="sorting-dropdown">
+            <button class="dropdown-toggle" onclick="toggleDropdown()"><span class="dropdown-title">Popularité</span><i class="fa-solid fa-chevron-down"></i></button>
+            <ul class="dropdown-list">
+              <li id="sort-popularity" class="hidden" aria-hidden="true"><button onclick="sortByPopularity()"><span class="sort-name">Popularité</span></button></li>
+              <li id="sort-name"><button onclick="sortByName()"><span class="sort-name">Titre</span></button></li>
+              <li id="sort-date"><button onclick="sortByDate()"><span class="sort-name">Date</span></button></li>
+            </ul>
+        </div>
+        </div>
         <div class="portfolio-grid"></div>
       </div>
       <div class="photographer-value"></div>

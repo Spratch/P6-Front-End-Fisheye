@@ -63,7 +63,7 @@ function displayValue(photographer, sumLikes) {
     photographerValue.appendChild(getValueDOM(sumLikes));
 }
 
-
+// Lightbox
 function setLightboxMedia(mediaToDisplay, mediaIndex, medias) {
     const image = medias[mediaIndex].image;
 
@@ -153,6 +153,61 @@ function lightboxNext(medias) {
     const mediaLightbox = lightboxModel.getLightboxDOM(currentIndex, mediaElement);
     lightboxMedia.appendChild(mediaLightbox);
 }
+
+// Dropdown and sort
+function toggleDropdown(){
+    const dropdown = document.querySelector(".sorting-dropdown");
+    dropdown.classList.toggle("unrolled");
+
+}
+
+function hideButton(button){
+    displayButton();
+    button.classList.add("hidden");
+    button.setAttribute("aria-hidden", "true");
+
+    // Then close dropdown
+    toggleDropdown();
+
+}
+
+function changeDropdownTitle(button){
+    const dropdownTitleElement = document.querySelector(".dropdown-title");
+    dropdownTitleElement.textContent = button.textContent;
+
+    // Then hide button
+    hideButton(button);
+
+}
+
+function displayButton(){
+    const hiddenButton = document.querySelector(".hidden");
+    hiddenButton.removeAttribute("aria-hidden");
+    hiddenButton.classList.remove("hidden");
+}
+
+
+
+function sortByPopularity(){
+    const button = document.getElementById("sort-popularity");
+    changeDropdownTitle(button);
+
+     
+
+}    
+
+function sortByName(){
+    const button = document.getElementById("sort-name");
+    changeDropdownTitle(button);
+
+    
+}
+
+function sortByDate(){
+    const button = document.getElementById("sort-date");
+    changeDropdownTitle(button);
+
+}    
 
 async function init() {
     const { photographers, media } = await getPhotographers();

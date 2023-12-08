@@ -130,6 +130,88 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 }
 
 /* Portfolio grid */
+.sorting{
+    padding-bottom: 20px;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 15px;
+}
+.sorting-dropdown{
+    display: inline-block;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    background-color: #901C1C;
+    border-radius: 5px;
+    transition: box-shadow 200ms ease-in-out;
+    position: relative;
+    min-width: 15ch;
+    
+    & .fa-chevron-down{
+        transition: all 200ms ease-in-out;
+    }
+
+    &.unrolled{
+        border-radius: 5px 5px 0 0;
+        z-index: 1;
+
+        & .fa-chevron-down{
+            rotate: -180deg;
+        }
+        & .dropdown-list{
+            height: auto;
+            opacity: 1;
+            pointer-events: all;
+        }
+    }
+
+    & button{
+        width: 100%;
+        display: flex;
+        border: none;
+        justify-content: space-between;
+        background-color: transparent;
+        padding: 0 20px;
+        font-size: 18px;
+        font-family: inherit;
+        color: white;
+        cursor: pointer;
+        gap: 18px;
+        align-items: center;
+        text-align: left;
+    }
+}
+.dropdown-title{
+    line-height: 4rem;
+}
+.dropdown-list{
+    margin: 0;
+    padding: 0;
+    height: 0;
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 100%;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+.sorting li{
+    list-style: none;
+    background-color: #901C1C;
+    width: 100%;
+
+    &.hidden{
+        display: none;
+    }
+}
+.sort-name{
+    border-top: 1px solid white;
+    display: block;
+    line-height: 4rem;
+    width: 100%;
+}
+
 .photographer-portfolio {
     margin: 30px 100px;
 }
@@ -142,7 +224,6 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 
 .media-article {
     width: 100%;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -216,6 +297,7 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     background-color: #5a5a5abf;
     justify-content: center;
     align-items: center;
+    z-index: 2;
 }
 #lightbox_modal .lightbox {
     margin: 50px;
