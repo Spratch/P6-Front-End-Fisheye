@@ -35,16 +35,23 @@ function filterMedias(media, urlId) {
 function displayMedias(photographerMedias) {
     // DOM elements
     const portfolioGrid = document.querySelector(".portfolio-grid");
+    portfolioGrid.innerHTML = "";
 
     // Grid construction
     photographerMedias.forEach((media, i) => {
         const { getPortfolioDOM } = photographerTemplate(media);
-        const mediasGrid = getPortfolioDOM();
+        const mediasGrid = getPortfolioDOM(i);
         portfolioGrid.appendChild(mediasGrid);
 
         mediasGrid.firstChild.addEventListener('click', () => {
             displayLightbox(media, i, photographerMedias);
         })
+        mediasGrid.firstChild.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                displayLightbox(media, i, photographerMedias);
+            }
+        });
+        
     });
 }
 
@@ -75,8 +82,13 @@ function setLightboxMedia(mediaToDisplay, mediaIndex, medias) {
 }
 
 function displayLightbox(media, i, medias) {
+    resetLightboxMedia();
     const lightboxModal = document.getElementById('lightbox_modal');
     const lightboxMedia = document.getElementById('lightbox_media');
+    
+    // Get the focus in the lightbox
+    // const closeIcon = document.querySelector('.lightbox__buttons--close');
+    // closeIcon.focus();
 
     main.setAttribute("aria-hidden", "true");
     lightboxModal.setAttribute("aria-hidden", "false");
@@ -186,27 +198,42 @@ function displayButton(){
     hiddenButton.classList.remove("hidden");
 }
 
-
-
-function sortByPopularity(){
+async function sortByPopularity(){
     const button = document.getElementById("sort-popularity");
     changeDropdownTitle(button);
 
-     
-
+    const urlId = getUrlId();
+    const { media } = await getPhotographers();
+    const photographerMedias = filterMedias(media, urlId);
+    const sortedMedias = photographerMedias.sort((a, b) => b.likes - a.likes);
+    displayMedias(sortedMedias);
 }    
 
-function sortByName(){
+async function sortByName(){
     const button = document.getElementById("sort-name");
     changeDropdownTitle(button);
 
-    
+    const urlId = getUrlId();
+    const { media } = await getPhotographers();
+    const photographerMedias = filterMedias(media, urlId);
+    const sortedMedias = photographerMedias.sort((a, b) => {
+        if (a.title < b.title) return -1;
+        if (a.title > b.title) return 1;
+        return 0;
+    });
+    displayMedias(sortedMedias);
 }
 
-function sortByDate(){
+async function sortByDate(){
     const button = document.getElementById("sort-date");
     changeDropdownTitle(button);
 
+    const urlId = getUrlId();
+    const { media } = await getPhotographers();
+    const photographerMedias = filterMedias(media, urlId);
+    const sortedMedias = photographerMedias.sort((a, b) => b.date - a.date).reverse();
+    console.log(sortedMedias)
+    displayMedias(sortedMedias);
 }    
 
 async function init() {
@@ -224,6 +251,3 @@ async function init() {
 }
 
 init();
-
-
-// https://www.figma.com/file/liUwMx1Nqqcl8BgUqE5j9W/P6?type=whiteboard&node-id=0%3A1&t=irGpXMaSoR9OPbnQ-1

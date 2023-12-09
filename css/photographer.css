@@ -253,11 +253,7 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 .portfolio-item__likes i{
     margin-left: 6px;
     cursor: pointer;
-    opacity: 0.5;
     font-size: 22px;
-}
-.portfolio-item__likes i.liked{
-    opacity: 1;
 }
 .photographer-value{
     position: fixed;

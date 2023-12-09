@@ -60,36 +60,43 @@ function photographerTemplate(data) {
     }
     
     // Photographer page media gallery DOM
-    function getPortfolioDOM() {
+    function getPortfolioDOM(tabindex) {
         // DOM Elements creation
-        const itemArticle = createDOMElement('article', { class: 'media-article', 'aria-label': 'Vue détaillée' });
-        const mediaElement = getMediaDOM(image);        
+        const itemArticle = createDOMElement('article', { class: 'media-article', 'aria-label': 'Vue détaillée'});
+        const mediaElement = getMediaDOM(image);
+        mediaElement.setAttribute('tabindex', tabindex);
         const infos = createDOMElement('div', { class: 'portfolio-item__infos' });
         const titleElement = createDOMElement('p', {}, title);
-        const likesContainer = createDOMElement('div', { class: 'portfolio-item__likes' });
+        const likesContainer = createDOMElement('div', { class: 'portfolio-item__likes', 'tabindex': tabindex + '.' + 1 });
         const likesNumber = createDOMElement('p', {}, likes);
-        const likesHeart = createDOMElement('i', { class: 'fa-solid fa-heart', style: 'color: #901C1C' });
+        const likesHeart = createDOMElement('i', { class: 'fa-regular fa-heart', style: 'color: #901C1C' });
 
-        likesHeart.addEventListener("click", () => {
+        function likeMedia(){
             // Get DOM Element
             const totalLikesElement = document.getElementsByClassName('value-likes');
             totalLikes = parseInt(totalLikesElement[0].innerText);
 
-            if (!likesHeart.classList.contains("liked")) {
+            if (!likesHeart.classList.contains("fa-solid")) {
                 likes++;
                 totalLikes++;
-                console.log(totalLikes)
                 totalLikesElement[0].innerText = totalLikes;
             } else {
                 likes--;
                 totalLikes--;
-                console.log(totalLikes)
                 totalLikesElement[0].innerText = totalLikes;
             }
 
-            likesHeart.classList.toggle("liked");
+            likesHeart.classList.toggle("fa-regular");
+            likesHeart.classList.toggle("fa-solid");
             likesNumber.textContent = likes;
-        });
+        }
+
+        likesContainer.addEventListener("click", () => { likeMedia(); });
+        likesContainer.addEventListener("keydown", (event) => {
+            if (event.key === 'Enter'){
+                likeMedia();
+            }
+        })
 
         // DOM Generation
         itemArticle.append(mediaElement, infos);
