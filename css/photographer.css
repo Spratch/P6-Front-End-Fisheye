@@ -44,10 +44,11 @@
     align-items: center;
     justify-content: center;
     background-color: #5a5a5abf;
+    z-index: 2;
 }
 
 .contact_button {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     color: white;
     padding: 11px;
@@ -57,6 +58,13 @@
     background-color: #901C1C;
     border-radius: 5px;
     cursor: pointer;
+    font-family: "DM Sans", sans-serif;
+    transition: all 130ms linear;
+
+    &:hover{
+        background-color: #DB8876;
+        color: black;
+    }
 }
 
 .modal {
@@ -114,6 +122,7 @@ form input {
     font-size: 24px;
     padding: 0 10px;
     box-sizing: border-box;
+    font-family: "DM Sans", sans-serif;
 }
 
 form textarea {
@@ -125,6 +134,7 @@ form textarea {
     font-size: 24px;
     padding: 10px;
     box-sizing: border-box;
+    font-family: "DM Sans", sans-serif;
 }
 
 form.submitted input:invalid, form.submitted textarea:invalid{
@@ -148,14 +158,14 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     transition: box-shadow 200ms ease-in-out;
     position: relative;
     min-width: 15ch;
+    z-index: 1;
     
     & .fa-chevron-down{
-        transition: all 200ms ease-in-out;
+        transition: rotate 200ms ease-in-out;
     }
 
     &.unrolled{
         border-radius: 5px 5px 0 0;
-        z-index: 1;
 
         & .fa-chevron-down{
             rotate: -180deg;
@@ -166,23 +176,35 @@ form.submitted input:invalid, form.submitted textarea:invalid{
             pointer-events: all;
         }
     }
+}
+.sorting-dropdown button{
+    width: 100%;
+    display: flex;
+    border: none;
+    justify-content: space-between;
+    background-color: transparent;
+    padding: 0 20px;
+    font-size: 18px;
+    font-family: inherit;
+    color: white;
+    cursor: pointer;
+    gap: 18px;
+    align-items: center;
+    text-align: left;
+}
 
-    & button{
-        width: 100%;
-        display: flex;
-        border: none;
-        justify-content: space-between;
-        background-color: transparent;
-        padding: 0 20px;
-        font-size: 18px;
-        font-family: inherit;
-        color: white;
-        cursor: pointer;
-        gap: 18px;
-        align-items: center;
-        text-align: left;
+.sorting-dropdown button:hover{
+    background-color: #DB8876;
+    color: black;
+
+    &.dropdown-toggle{
+        border-radius: 5px;
     }
 }
+.sorting-dropdown.unrolled button.dropdown-toggle:hover{
+    border-radius: 5px 5px 0 0;
+}
+
 .dropdown-title{
     line-height: 4rem;
 }
@@ -205,6 +227,10 @@ form.submitted input:invalid, form.submitted textarea:invalid{
 
     &.hidden{
         display: none;
+    }
+
+    &:hover{
+        /* background-color: #DB8876; */
     }
 }
 .sort-name{
