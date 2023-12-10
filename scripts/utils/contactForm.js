@@ -16,15 +16,17 @@ function displayModal() {
     modal.setAttribute("aria-hidden", "false"); // Show modal for AT
     body.style.overflow = "hidden"; // Prevent scrolling
     modal.style.display = "flex"; // Show modal
+    modalCloseBtn.tabIndex = 0;
     modalCloseBtn.focus(); // Focus on close button
+
 }
 
 // Close modal
 function closeModal() {
-    main.setAttribute("aria-hidden", "false"); // Hide main content for Assistive Technologies
-    modal.setAttribute("aria-hidden", "true"); // Show modal for AT
-    body.style.overflow = "auto"; // Prevent scrolling
-	modal.style.display = "none"; // Show modal
+    main.setAttribute("aria-hidden", "false"); // Show main content for Assistive Technologies
+    modal.setAttribute("aria-hidden", "true"); // Hide modal for AT
+    body.style.overflow = "auto"; // Allow scrolling
+	modal.style.display = "none"; // Hide modal
     modalOpenBtn.focus(); // Focus on open button
 }
 
