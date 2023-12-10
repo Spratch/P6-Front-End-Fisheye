@@ -54,7 +54,7 @@ h1 {
 .photographer_section article h2 {
     color: #D3573C;
     font-size: 36px;
-    margin: 20px 0 0 0;
+    margin: 0;
     text-align: center;
     font-weight: 400;
 
@@ -68,8 +68,9 @@ h1 {
 .photographer_section article img {
     height: 200px;
     width: 200px;
-    border-radius: 50%;
     object-fit: cover;
+    mask-image: url(/assets/avatar-mask.png);
+    mask-size: 100%;
 }
 
 .photographer-location{

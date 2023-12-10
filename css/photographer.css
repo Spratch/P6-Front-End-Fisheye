@@ -26,10 +26,12 @@
     margin: 0;
 }
 .profile-picture{
-    border-radius: 50%;
+    /* border-radius: 50%; */
     max-width: 200px;
     aspect-ratio: 1;
     object-fit: cover;
+    mask-image: url(/assets/avatar-mask.png);
+    mask-size: 100%;
 }
 
 #contact_modal {
