@@ -84,8 +84,10 @@
     width: 100%;
 }
 
-.modal header img {
+.modal header button {
     cursor: pointer;
+    background-color: transparent;
+    border: none;
 }
 
 .modal header h2 {
@@ -357,9 +359,11 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     position: absolute;
     width: calc(100% - 100px);
     height: calc(100% - 100px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.lightbox__buttons>*{
-    position: absolute;
+.lightbox__buttons button{
     background-color: transparent;
     border: none;
     font-size: 35px;
@@ -368,19 +372,12 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     padding: 0;
 }
 .lightbox__buttons--prev, .lightbox__buttons--next{
-    top: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
+    height: fit-content;
     z-index: 1;
 }
-.lightbox__buttons--prev{
-    left: 0;
-}
-.lightbox__buttons--next{
-    right: 0;
-}
 .lightbox__buttons--close{
+    position: absolute;
     right: 0;
+    top: 0;
     z-index: 2;
 }

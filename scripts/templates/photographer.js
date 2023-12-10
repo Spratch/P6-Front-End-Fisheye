@@ -64,7 +64,7 @@ function photographerTemplate(data) {
         // DOM Elements creation
         const itemArticle = createDOMElement('article', { class: 'media-article', 'aria-label': 'Vue détaillée'});
         const mediaElement = getMediaDOM(image);
-        mediaElement.setAttribute('tabindex', tabindex);
+        mediaElement.tabIndex = tabindex;
         const infos = createDOMElement('div', { class: 'portfolio-item__infos' });
         const titleElement = createDOMElement('p', {}, title);
         const likesContainer = createDOMElement('div', { class: 'portfolio-item__likes', 'tabindex': tabindex + '.' + 1 });

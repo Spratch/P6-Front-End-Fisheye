@@ -87,8 +87,8 @@ function displayLightbox(media, i, medias) {
     const lightboxMedia = document.getElementById('lightbox_media');
     
     // Get the focus in the lightbox
-    // const closeIcon = document.querySelector('.lightbox__buttons--close');
-    // closeIcon.focus();
+    const closeIcon = document.querySelector('.lightbox__buttons--close');
+    closeIcon.focus();
 
     main.setAttribute("aria-hidden", "true");
     lightboxModal.setAttribute("aria-hidden", "false");
