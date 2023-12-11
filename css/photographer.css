@@ -230,10 +230,6 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     &.hidden{
         display: none;
     }
-
-    &:hover{
-        /* background-color: #DB8876; */
-    }
 }
 .sort-name{
     border-top: 1px solid white;
