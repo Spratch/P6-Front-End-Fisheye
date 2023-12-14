@@ -10,23 +10,23 @@
   </head>
   <body id="body">
     <header>
-      <a href="/" aria-label="Fisheye Home page" target="_self">
+      <a href="/" aria-label="Fisheye Home page" target="_self" tabindex="1">
         <img src="assets/images/logo.png" class="logo" alt="fisheye logo"/>
       </a>
     </header>
 
     <main id="main" aria-hidden="false">
       <div class="photograph-header">
-        <button class="contact_button" onclick="displayModal()" id="modalOpenBtn">Contactez-moi</button>
+        <button class="contact_button" onclick="displayModal()" id="modalOpenBtn" tabindex="2">Contactez-moi</button>
       </div>
       <div class="photographer-portfolio">
         <div class="sorting">Trier par 
           <div class="sorting-dropdown">
-            <button class="dropdown-toggle" onclick="toggleDropdown()"><span class="dropdown-title">Popularité</span><i class="fa-solid fa-chevron-down"></i></button>
+            <button class="dropdown-toggle" onclick="toggleDropdown()"><span class="dropdown-title" tabindex="3">Popularité</span><i class="fa-solid fa-chevron-down"></i></button>
             <ul class="dropdown-list">
-              <li id="sort-popularity" class="hidden" aria-hidden="true"><button onclick="sortByPopularity()"><span class="sort-name">Popularité</span></button></li>
-              <li id="sort-name"><button onclick="sortByName()"><span class="sort-name">Titre</span></button></li>
-              <li id="sort-date"><button onclick="sortByDate()"><span class="sort-name">Date</span></button></li>
+              <li id="sort-popularity" class="hidden" aria-hidden="true" tabindex="3.1"><button onclick="sortByPopularity()"><span class="sort-name">Popularité</span></button></li>
+              <li id="sort-name"><button onclick="sortByName()" tabindex="3.2"><span class="sort-name">Titre</span></button></li>
+              <li id="sort-date"><button onclick="sortByDate()" tabindex="3.3"><span class="sort-name">Date</span></button></li>
             </ul>
         </div>
         </div>
@@ -66,9 +66,9 @@
     <div id="lightbox_modal" aria-hidden="true" role="dialog" aria-label="Vue rapprochée de l'image" aria-hidden="true">
       <div class="lightbox">
         <div class="lightbox__buttons">
+          <button class="lightbox__buttons--close" aria-label="Fermer la boîte de dialogue" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
           <button class="lightbox__buttons--prev" aria-label="Média précédent"><i class="fa-solid fa-chevron-left"></i></button>
           <button class="lightbox__buttons--next" aria-label="Média suivant"><i class="fa-solid fa-chevron-right"></i></button>
-          <button class="lightbox__buttons--close" aria-label="Fermer la boîte de dialogue" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div id="lightbox_media"></div>
       </div>

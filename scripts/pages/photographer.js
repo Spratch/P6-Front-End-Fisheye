@@ -87,10 +87,7 @@ function displayLightbox(media, i, medias) {
 	resetLightboxMedia();
 	const lightboxModal = document.getElementById("lightbox_modal");
 	const lightboxMedia = document.getElementById("lightbox_media");
-	
-	// Get the focus in the lightbox
-	const closeIcon = document.querySelector(".lightbox__buttons--close");
-	closeIcon.focus();
+
 
 	main.setAttribute("aria-hidden", "true");
 	lightboxModal.setAttribute("aria-hidden", "false");
@@ -101,6 +98,11 @@ function displayLightbox(media, i, medias) {
 	const lightboxModel = photographerTemplate(media);
 	const mediaLightbox = lightboxModel.getLightboxDOM(i, mediaElement);
 	lightboxMedia.appendChild(mediaLightbox);
+
+	// Get the focus in the lightbox
+	const closeIcon = document.querySelector(".lightbox__buttons--close");
+	closeIcon.tabIndex = 0;
+	window.setTimeout(() => closeIcon.focus(), 0);
 
 	currentIndex = i;  // Set currentIndex when opening the lightbox
 
