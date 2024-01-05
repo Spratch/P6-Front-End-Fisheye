@@ -24,9 +24,9 @@
           <div class="sorting-dropdown">
             <button class="dropdown-toggle" onclick="toggleDropdown()"><span class="dropdown-title" tabindex="3">Popularité</span><i class="fa-solid fa-chevron-down"></i></button>
             <ul class="dropdown-list">
-              <li id="sort-popularity" class="hidden" aria-hidden="true" tabindex="3.1"><button onclick="sortByPopularity()"><span class="sort-name">Popularité</span></button></li>
-              <li id="sort-name"><button onclick="sortByName()" tabindex="3.2"><span class="sort-name">Titre</span></button></li>
-              <li id="sort-date"><button onclick="sortByDate()" tabindex="3.3"><span class="sort-name">Date</span></button></li>
+              <li id="sort-popularity" class="hidden" aria-hidden="true" tabindex="3.1"><button onclick="sortMedia('sort-popularity')"><span class="sort-name">Popularité</span></button></li>
+              <li id="sort-name"><button onclick="sortMedia('sort-name')" tabindex="3.2"><span class="sort-name">Titre</span></button></li>
+              <li id="sort-date"><button onclick="sortMedia('sort-date')" tabindex="3.3"><span class="sort-name">Date</span></button></li>
             </ul>
         </div>
         </div>

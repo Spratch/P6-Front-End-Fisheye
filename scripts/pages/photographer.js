@@ -86,6 +86,7 @@ function setLightboxMedia(mediaToDisplay, mediaIndex, medias) {
 
 function displayLightbox(media, i, medias) {
 	resetLightboxMedia();
+	disableTabindexForPage();
 	const lightboxModal = document.getElementById("lightbox_modal");
 	const lightboxMedia = document.getElementById("lightbox_media");
 
@@ -149,6 +150,7 @@ function closeLightbox(){
 	lightboxModal.style.display = "none"; // Hide modal
 	
 	resetLightboxMedia();
+	enableTabindexForPage();
 }
 
 function lightboxPrev(medias) {
@@ -203,45 +205,33 @@ function displayButton(){
 	hiddenButton.classList.remove("hidden");
 }
 
-async function sortByPopularity(){
-	// Change dropdown title
-	const button = document.getElementById("sort-popularity");
-	changeDropdownTitle(button);
+async function sortMedia(sortType) {
+    const button = document.getElementById(sortType);
+    changeDropdownTitle(button);
 
-	const urlId = getUrlId();
-	const { media } = await getPhotographers();
-	const photographerMedias = filterMedias(media, urlId);
-	const sortedMedias = photographerMedias.sort((a, b) => b.likes - a.likes);
-	displayMedias(sortedMedias);
-}    
+    const urlId = getUrlId();
+    const { media } = await getPhotographers();
+    const photographerMedias = filterMedias(media, urlId);
 
-async function sortByName(){
-	// Change dropdown title
-	const button = document.getElementById("sort-name");
-	changeDropdownTitle(button);
+    let sortedMedias;
 
-	const urlId = getUrlId();
-	const { media } = await getPhotographers();
-	const photographerMedias = filterMedias(media, urlId);
-	const sortedMedias = photographerMedias.sort((a, b) => {
-		if (a.title < b.title) return -1;
-		if (a.title > b.title) return 1;
-		return 0;
-	});
-	displayMedias(sortedMedias);
+    switch (sortType) {
+        case "sort-popularity":
+            sortedMedias = photographerMedias.sort((a, b) => b.likes - a.likes);
+            break;
+        case "sort-name":
+            sortedMedias = photographerMedias.sort((a, b) => a.title.localeCompare(b.title));
+            break;
+        case "sort-date":
+            sortedMedias = photographerMedias.sort((a, b) => b.date - a.date).reverse();
+            break;
+        default:
+            // Default case: no sorting
+            sortedMedias = photographerMedias;
+    }
+
+    displayMedias(sortedMedias);
 }
-
-async function sortByDate(){
-	// Change dropdown title
-	const button = document.getElementById("sort-date");
-	changeDropdownTitle(button);
-
-	const urlId = getUrlId();
-	const { media } = await getPhotographers();
-	const photographerMedias = filterMedias(media, urlId);
-	const sortedMedias = photographerMedias.sort((a, b) => b.date - a.date).reverse();
-	displayMedias(sortedMedias);
-}    
 
 async function init() {
 	const { photographers, media } = await getPhotographers();
