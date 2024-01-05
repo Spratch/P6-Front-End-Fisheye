@@ -6,6 +6,7 @@ function displayModal() {
 	modal.style.display = "flex"; // Show modal
 	modalCloseBtn.tabIndex = 0;
 	modalCloseBtn.focus(); // Focus on close button
+	disableTabindexForPage();
 
 }
 
@@ -16,6 +17,7 @@ function closeModal() {
 	body.style.overflow = "auto"; // Allow scrolling
 	modal.style.display = "none"; // Hide modal
 	modalOpenBtn.focus(); // Focus on open button
+	enableTabindexForPage();
 }
 
 // Press Escape to close modal

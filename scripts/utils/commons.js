@@ -27,3 +27,34 @@ function createDOMElement(tag, attributes = {}, textContent) {
 
 	return element;
 }
+
+// Store initial tabindex values
+const initialTabIndexes = new Map();
+
+// Set tabindex to -1 for elements not in modal
+function disableTabindexForPage() {
+    const pageElements = document.querySelectorAll('body > *:not(#lightbox_modal):not(#contact_modal) *');
+    pageElements.forEach(element => {
+        // Store the initial tabindex value if not already stored
+        if (!initialTabIndexes.has(element)) {
+            initialTabIndexes.set(element, element.getAttribute('tabindex'));
+        }
+        // Set tabindex to -1
+        element.setAttribute('tabindex', -1);
+    });
+}
+
+// Restore tabindex for elements not in modal
+function enableTabindexForPage() {
+    // Iterate through stored entries and check if elements still exist
+    initialTabIndexes.forEach((initialTabIndex, element) => {
+        if (document.contains(element)) {
+            // Restore initial tabindex value
+            element.setAttribute('tabindex', initialTabIndex);
+        } else {
+            // Remove entry for elements that no longer exist
+            initialTabIndexes.delete(element);
+        }
+    });
+}
+	

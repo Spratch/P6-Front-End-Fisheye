@@ -45,6 +45,7 @@ function displayMedias(photographerMedias) {
 		const mediasGrid = getPortfolioDOM(i);
 		portfolioGrid.appendChild(mediasGrid);
 
+		// Display lightbox
 		mediasGrid.firstChild.addEventListener("click", () => {
 			displayLightbox(media, i, photographerMedias);
 		});
@@ -203,6 +204,7 @@ function displayButton(){
 }
 
 async function sortByPopularity(){
+	// Change dropdown title
 	const button = document.getElementById("sort-popularity");
 	changeDropdownTitle(button);
 
@@ -214,6 +216,7 @@ async function sortByPopularity(){
 }    
 
 async function sortByName(){
+	// Change dropdown title
 	const button = document.getElementById("sort-name");
 	changeDropdownTitle(button);
 
@@ -229,6 +232,7 @@ async function sortByName(){
 }
 
 async function sortByDate(){
+	// Change dropdown title
 	const button = document.getElementById("sort-date");
 	changeDropdownTitle(button);
 
