@@ -50,7 +50,7 @@ function photographerTemplate(data) {
 		const value = !image ? "true" : title;
 
 		// DOM Generation
-		const mediaElement = createDOMElement(element, { src: `assets/images/${file}`, [attribut]: value });
+		const mediaElement = createDOMElement(element, { src: `assets/images/${file}`, [attribut]: value, class: "media-element" });
 		if (!image && fromLightbox) {
 			mediaElement.setAttribute("controls", "true");
 			mediaElement.setAttribute("autoplay", "true");
