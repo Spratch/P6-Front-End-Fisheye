@@ -1,5 +1,5 @@
 function photographerTemplate(data) {
-	let { name, portrait, id, city, country, tagline, price, title, image, video, likes } = data;
+	let { name, portrait, id, city, country, tagline, price, title, image, video, likes, date } = data;
 
 	const picture = `assets/photographers/${portrait}`;
 
@@ -100,6 +100,9 @@ function photographerTemplate(data) {
 
 		// DOM Generation
 		itemArticle.append(mediaElement, infos);
+		itemArticle.dataset.title = title;
+		itemArticle.dataset.likes = likes;
+		itemArticle.dataset.date = date;
 		infos.append(titleElement, likesContainer);
 		likesContainer.append(likesNumber, likesHeart);
 	

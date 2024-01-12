@@ -205,32 +205,38 @@ function displayButton(){
 	hiddenButton.classList.remove("hidden");
 }
 
-async function sortMedia(sortType) {
+function sortMedias(sortType) {
     const button = document.getElementById(sortType);
     changeDropdownTitle(button);
 
-    const urlId = getUrlId();
-    const { media } = await getPhotographers();
-    const photographerMedias = filterMedias(media, urlId);
+	const mediasList = document.getElementsByClassName("media-article");
+	const portfolioGrid = document.querySelector(".portfolio-grid");
 
-    let sortedMedias;
+	mediasListArray = Array.from(mediasList);
 
-    switch (sortType) {
-        case "sort-popularity":
-            sortedMedias = photographerMedias.sort((a, b) => b.likes - a.likes);
-            break;
+	switch (sortType) {
+		case "sort-popularity":
+			sortedMedias = mediasListArray.sort((a,b) => b.dataset.likes - a.dataset.likes);
+			break;
         case "sort-name":
-            sortedMedias = photographerMedias.sort((a, b) => a.title.localeCompare(b.title));
+            sortedMedias = mediasListArray.sort((a, b) => a.dataset.title.localeCompare(b.dataset.title));
             break;
         case "sort-date":
-            sortedMedias = photographerMedias.sort((a, b) => b.date - a.date).reverse();
+            sortedMedias = mediasListArray.sort((a, b) => b.dataset.date - a.dataset.date).reverse();
             break;
         default:
             // Default case: no sorting
-            sortedMedias = photographerMedias;
-    }
+            sortedMedias = mediasListArray;
+	}
 
-    displayMedias(sortedMedias);
+	portfolioGrid.innerHTML = "";
+	sortedMedias.forEach((element, i) => {
+		element.getElementsByClassName("media-element")[0].tabIndex = i + 4
+		element.getElementsByClassName("portfolio-item__likes")[0].tabIndex = i + 4 + "." + 1;
+		portfolioGrid.appendChild(element)
+	});
+	
+
 }
 
 async function init() {
