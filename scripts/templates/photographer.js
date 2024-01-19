@@ -42,7 +42,7 @@ function photographerTemplate(data) {
 	}
 
 	// Photographer page media generation function
-	function getMediaDOM(image, fromLightbox){
+	function getMediaDOM(image){
 		// Handle differently media if image or video
 		const file = !image ? video : image;
 		const element = !image ? "video" : "img";
@@ -51,14 +51,10 @@ function photographerTemplate(data) {
 
 		// DOM Generation
 		const mediaElement = createDOMElement(element, { src: `assets/images/${file}`, [attribut]: value, class: "media-element" });
-		if (!image && fromLightbox) {
-			mediaElement.setAttribute("controls", "true");
-			mediaElement.setAttribute("autoplay", "true");
-		}
 
 		return mediaElement;
 	}
-	
+
 	// Photographer page media gallery DOM
 	function getPortfolioDOM(tabindex) {
 		// DOM Elements creation
@@ -66,7 +62,7 @@ function photographerTemplate(data) {
 		const mediaElement = getMediaDOM(image);
 		mediaElement.tabIndex = tabindex + 4;
 		const infos = createDOMElement("div", { class: "portfolio-item__infos" });
-		const titleElement = createDOMElement("p", {}, title);
+		const titleElement = createDOMElement("p", { class: "portfolio-item__title" }, title);
 		const likesContainer = createDOMElement("div", { class: "portfolio-item__likes", "tabindex": tabindex + 4 + "." + 1 });
 		const likesNumber = createDOMElement("p", {}, likes);
 		const likesHeart = createDOMElement("i", { class: "fa-regular fa-heart", style: "color: #901C1C" });
@@ -124,6 +120,30 @@ function photographerTemplate(data) {
 		return valueDiv;
 	}
 
+	function getLightboxMediaDOM(media){
+		// Get the extension
+		const extension = media.substring(media.lastIndexOf('.') + 1, media.length);
+		console.log(extension)
+		let image = false;
+		if (extension == "webp") {
+			image = true;
+			console.log(image);
+		}
+		// Handle differently media if image or video
+		const element = !image ? "video" : "img";
+		const attribut = !image ? "muted" : "alt";
+		const value = !image ? "true" : title;
+
+		// DOM Generation
+		const mediaElement = createDOMElement(element, { src: media, [attribut]: value, class: "media-element" });
+		if (!image) {
+			mediaElement.setAttribute("controls", "true");
+			mediaElement.setAttribute("autoplay", "true");
+		}
+
+		return mediaElement;
+	}
+
 	function getLightboxDOM(i, mediaElement) {
 		// DOM Elements creation
 		const mediaParent = createDOMElement("div", { class: "lightbox-media-container"});
@@ -135,5 +155,5 @@ function photographerTemplate(data) {
 		return mediaParent;
 	}
 
-	return { name, picture, getUserCardDOM, getProfileDOM, getProfilePic, getMediaDOM, getPortfolioDOM, getValueDOM, getLightboxDOM };
+	return { name, picture, getUserCardDOM, getProfileDOM, getProfilePic, getMediaDOM, getPortfolioDOM, getValueDOM, getLightboxDOM, getLightboxMediaDOM };
 }

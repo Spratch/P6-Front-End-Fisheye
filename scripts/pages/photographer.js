@@ -37,7 +37,6 @@ function filterMedias(media, urlId) {
 function displayMedias(photographerMedias) {
 	// DOM elements
 	const portfolioGrid = document.querySelector(".portfolio-grid");
-	portfolioGrid.innerHTML = "";
 
 	// Grid construction
 	photographerMedias.forEach((media, i) => {
@@ -47,15 +46,16 @@ function displayMedias(photographerMedias) {
 
 		// Display lightbox
 		mediasGrid.firstChild.addEventListener("click", () => {
-			displayLightbox(media, i, photographerMedias);
+			displayLightbox(media, i, mediasList);
 		});
 		mediasGrid.firstChild.addEventListener("keydown", (event) => {
 			if (event.key === "Enter") {
-				displayLightbox(media, i, photographerMedias);
+				displayLightbox(media, i, mediasList);
 			}
 		});
 		
 	});
+	updateMediasList();
 }
 
 function getPhotographerLikes(medias){
@@ -71,106 +71,6 @@ function displayValue(photographer, sumLikes) {
 	// Value content construction
 	const { getValueDOM } = photographerTemplate(photographer);
 	photographerValue.appendChild(getValueDOM(sumLikes));
-}
-
-// Lightbox
-function setLightboxMedia(mediaToDisplay, mediaIndex, medias) {
-	const image = medias[mediaIndex].image;
-
-	const fromLightbox = true;
-	const lightboxModel = photographerTemplate(mediaToDisplay);
-	const mediaElement = lightboxModel.getMediaDOM(image, fromLightbox);
-
-	return mediaElement;
-}
-
-function displayLightbox(media, i, medias) {
-	resetLightboxMedia();
-	disableTabindexForPage();
-	const lightboxModal = document.getElementById("lightbox_modal");
-	const lightboxMedia = document.getElementById("lightbox_media");
-
-
-	main.setAttribute("aria-hidden", "true");
-	lightboxModal.setAttribute("aria-hidden", "false");
-	body.style.overflow = "hidden";
-	lightboxModal.style.display = "flex";
-
-	const mediaElement = setLightboxMedia(media, i, medias);
-	const lightboxModel = photographerTemplate(media);
-	const mediaLightbox = lightboxModel.getLightboxDOM(i, mediaElement);
-	lightboxMedia.appendChild(mediaLightbox);
-
-	// Get the focus in the lightbox
-	const closeIcon = document.querySelector(".lightbox__buttons--close");
-	closeIcon.tabIndex = 0;
-	window.setTimeout(() => closeIcon.focus(), 0);
-
-	currentIndex = i;  // Set currentIndex when opening the lightbox
-
-	const arrowPrev = document.querySelector(".lightbox__buttons--prev");
-	const arrowNext = document.querySelector(".lightbox__buttons--next");
-
-	arrowPrev.addEventListener("click", () => {
-		lightboxPrev(medias);
-	});
-	arrowNext.addEventListener("click", () => {
-		lightboxNext(medias);
-	});
-
-	function keydownHandler(e) {
-		switch (e.key) {
-		case "Escape":
-		case "Esc":
-			closeLightbox();
-			break;
-		case "ArrowLeft":
-			lightboxPrev(medias);
-			break;
-		case "ArrowRight":
-			lightboxNext(medias);
-			break;
-		}
-	}
-	document.addEventListener("keydown", keydownHandler);
-}
-
-function resetLightboxMedia() {
-	const lightboxMedia = document.getElementById("lightbox_media");
-	lightboxMedia.innerHTML = "";
-}
-
-function closeLightbox(){
-	// DOM
-	const lightboxModal = document.getElementById("lightbox_modal");
-
-	main.setAttribute("aria-hidden", "false"); // reveal main content for Assistive Technologies
-	lightboxModal.setAttribute("aria-hidden", "true"); // hide modal for AT
-	body.style.overflow = "auto"; // Allow scrolling
-	lightboxModal.style.display = "none"; // Hide modal
-	
-	resetLightboxMedia();
-	enableTabindexForPage();
-}
-
-function lightboxPrev(medias) {
-	const lightboxMedia = document.getElementById("lightbox_media");
-	resetLightboxMedia();
-	currentIndex = (currentIndex - 1 + medias.length) % medias.length;
-	const mediaElement = setLightboxMedia(medias[currentIndex], currentIndex, medias);
-	const lightboxModel = photographerTemplate(medias[currentIndex]);
-	const mediaLightbox = lightboxModel.getLightboxDOM(currentIndex, mediaElement);
-	lightboxMedia.appendChild(mediaLightbox);
-}
-
-function lightboxNext(medias) {
-	const lightboxMedia = document.getElementById("lightbox_media");
-	resetLightboxMedia();
-	currentIndex = (currentIndex + 1 + medias.length) % medias.length;
-	const mediaElement = setLightboxMedia(medias[currentIndex], currentIndex, medias);
-	const lightboxModel = photographerTemplate(medias[currentIndex]);
-	const mediaLightbox = lightboxModel.getLightboxDOM(currentIndex, mediaElement);
-	lightboxMedia.appendChild(mediaLightbox);
 }
 
 // Dropdown and sort
@@ -235,7 +135,7 @@ function sortMedias(sortType) {
 		element.getElementsByClassName("portfolio-item__likes")[0].tabIndex = i + 4 + "." + 1;
 		portfolioGrid.appendChild(element)
 	});
-	
+	updateMediasList();
 
 }
 

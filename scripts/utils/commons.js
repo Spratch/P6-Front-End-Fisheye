@@ -9,6 +9,9 @@ const first = document.getElementById("first-name");
 const last = document.getElementById("last-name");
 const email = document.getElementById("email");
 const message = document.getElementById("message");
+const lightboxMedia = document.getElementById("lightbox_media");
+const lightboxModal = document.getElementById("lightbox_modal");
+
 
 // DOM elements creation with type of tag, table of attributes, and textContent
 function createDOMElement(tag, attributes = {}, textContent) {
@@ -30,7 +33,6 @@ function createDOMElement(tag, attributes = {}, textContent) {
 
 // Store initial tabindex values
 const initialTabIndexes = new Map();
-
 // Set tabindex to -1 for elements not in modal
 function disableTabindexForPage() {
     const pageElements = document.querySelectorAll('body > *:not(#lightbox_modal):not(#contact_modal) *');
@@ -43,7 +45,6 @@ function disableTabindexForPage() {
         element.setAttribute('tabindex', -1);
     });
 }
-
 // Restore tabindex for elements not in modal
 function enableTabindexForPage() {
     // Iterate through stored entries and check if elements still exist
@@ -58,3 +59,22 @@ function enableTabindexForPage() {
     });
 }
 	
+// Function to extract values from elements and update mediasList
+let mediasList = {};
+function updateMediasList() {
+    const mediasSrcList = document.getElementsByClassName("media-element");
+    const mediasTitlesList = document.getElementsByClassName("portfolio-item__title");
+  
+    // Clear previous values
+    mediasList = {};
+  
+    // Iterate through the collection and add properties to the mediasList object
+    for (let i = 0; i < mediasSrcList.length; i++) {
+      mediasList[i] = {
+        src: mediasSrcList[i].src,
+        title: mediasTitlesList[i].innerText
+      };
+    }
+  
+    console.log(mediasList);
+}
