@@ -117,12 +117,15 @@ function sortMedias(sortType) {
 	switch (sortType) {
 		case "sort-popularity":
 			sortedMedias = mediasListArray.sort((a,b) => b.dataset.likes - a.dataset.likes);
+			console.log("popularity")
 			break;
         case "sort-name":
             sortedMedias = mediasListArray.sort((a, b) => a.dataset.title.localeCompare(b.dataset.title));
+			console.log("name")
             break;
         case "sort-date":
             sortedMedias = mediasListArray.sort((a, b) => b.dataset.date - a.dataset.date).reverse();
+			console.log("date")
             break;
         default:
             // Default case: no sorting

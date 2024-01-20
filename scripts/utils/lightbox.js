@@ -1,7 +1,7 @@
 function setLightboxMedia(mediaToDisplay, mediaIndex, mediasList) {
 	const media = mediasList[mediaIndex].src;
 	// const title = mediasList[mediaIndex].
-	console.log(mediasList[mediaIndex])
+	console.log(mediasList[mediaIndex].title)
 
 	const mediaElement = photographerTemplate(mediaToDisplay).getLightboxMediaDOM(media);
     
@@ -33,28 +33,44 @@ function displayLightbox(media, i, mediasList) {
 
 	currentIndex = i;  // Set currentIndex when opening the lightbox
 
-	const arrowPrev = document.querySelector(".lightbox__buttons--prev");
-	const arrowNext = document.querySelector(".lightbox__buttons--next");
+	function resetLightboxEventListeners() {
+		document.removeEventListener("keydown", keydownHandler);
+		lighboxButtons.removeEventListener("click", lighboxButtonsClick);
+	}
+	  
+	const lighboxButtons = document.querySelector(".lightbox__buttons");
 
-	arrowPrev.addEventListener("click", () => {
-		lightboxPrev(mediasList);
-	});
-	arrowNext.addEventListener("click", () => {
-		lightboxNext(mediasList);
-	});
+	function lighboxButtonsClick(event) {
+		const target = event.target.classList;
+
+		switch (true) {
+			case target.contains("fa-xmark"):
+				closeLightbox();
+				resetLightboxEventListeners();
+				break;
+			case target.contains("fa-chevron-left"):
+				lightboxPrev(mediasList);
+				break;
+			case target.contains("fa-chevron-right"):
+				lightboxNext(mediasList);
+				break;
+		}
+	}
+	lighboxButtons.addEventListener("click", lighboxButtonsClick);
 
 	function keydownHandler(e) {
 		switch (e.key) {
-		case "Escape":
-		case "Esc":
-			closeLightbox();
-			break;
-		case "ArrowLeft":
-			lightboxPrev(mediasList);
-			break;
-		case "ArrowRight":
-			lightboxNext(mediasList);
-			break;
+			case "Escape":
+			case "Esc":
+				closeLightbox();
+				resetLightboxEventListeners();
+				break;
+			case "ArrowLeft":
+				lightboxPrev(mediasList);
+				break;
+			case "ArrowRight":
+				lightboxNext(mediasList);
+				break;
 		}
 	}
 	document.addEventListener("keydown", keydownHandler);
@@ -70,7 +86,7 @@ function closeLightbox(){
 }
 
 function lightboxPrev(mediasList) {
-	currentIndex = (currentIndex - 1 + mediasList.length) % mediasList.length;
+	currentIndex = (currentIndex - 1 + Object.keys(mediasList).length) % Object.keys(mediasList).length;
 	const mediaElement = setLightboxMedia(mediasList[currentIndex], currentIndex, mediasList);
 	const lightboxModel = photographerTemplate(mediasList[currentIndex]);
 	const mediaLightbox = lightboxModel.getLightboxDOM(currentIndex, mediaElement);
@@ -78,7 +94,7 @@ function lightboxPrev(mediasList) {
 }
 
 function lightboxNext(mediasList) {
-	currentIndex = (currentIndex + 1 + mediasList.length) % mediasList.length;
+	currentIndex = (currentIndex + 1 + Object.keys(mediasList).length) % Object.keys(mediasList).length;
 	const mediaElement = setLightboxMedia(mediasList[currentIndex], currentIndex, mediasList);
 	const lightboxModel = photographerTemplate(mediasList[currentIndex]);
 	const mediaLightbox = lightboxModel.getLightboxDOM(currentIndex, mediaElement);

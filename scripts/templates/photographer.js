@@ -123,11 +123,9 @@ function photographerTemplate(data) {
 	function getLightboxMediaDOM(media){
 		// Get the extension
 		const extension = media.substring(media.lastIndexOf('.') + 1, media.length);
-		console.log(extension)
 		let image = false;
 		if (extension == "webp") {
 			image = true;
-			console.log(image);
 		}
 		// Handle differently media if image or video
 		const element = !image ? "video" : "img";
@@ -135,7 +133,7 @@ function photographerTemplate(data) {
 		const value = !image ? "true" : title;
 
 		// DOM Generation
-		const mediaElement = createDOMElement(element, { src: media, [attribut]: value, class: "media-element" });
+		const mediaElement = createDOMElement(element, { src: media, [attribut]: value, class: "lightbox-media-element" });
 		if (!image) {
 			mediaElement.setAttribute("controls", "true");
 			mediaElement.setAttribute("autoplay", "true");

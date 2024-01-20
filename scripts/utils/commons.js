@@ -64,17 +64,15 @@ let mediasList = {};
 function updateMediasList() {
     const mediasSrcList = document.getElementsByClassName("media-element");
     const mediasTitlesList = document.getElementsByClassName("portfolio-item__title");
-  
     // Clear previous values
     mediasList = {};
-  
+    
     // Iterate through the collection and add properties to the mediasList object
     for (let i = 0; i < mediasSrcList.length; i++) {
-      mediasList[i] = {
+        mediasList[i] = {
         src: mediasSrcList[i].src,
         title: mediasTitlesList[i].innerText
-      };
+        };
     }
-  
-    console.log(mediasList);
+    console.log("updatedMediasList : ",  mediasList[0].title,",", mediasList[1].title,",", mediasList[5].title);
 }
