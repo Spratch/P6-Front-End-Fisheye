@@ -9,6 +9,7 @@ const first = document.getElementById("first-name");
 const last = document.getElementById("last-name");
 const email = document.getElementById("email");
 const message = document.getElementById("message");
+const portfolioGrid = document.querySelector(".portfolio-grid");
 const lightboxMedia = document.getElementById("lightbox_media");
 const lightboxModal = document.getElementById("lightbox_modal");
 
@@ -74,5 +75,5 @@ function updateMediasList() {
         title: mediasTitlesList[i].innerText
         };
     }
-    console.log("updatedMediasList : ",  mediasList[0].title,",", mediasList[1].title,",", mediasList[5].title);
+	triggerLightbox();
 }

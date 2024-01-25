@@ -1,7 +1,7 @@
 function setLightboxMedia(mediaToDisplay, mediaIndex, mediasList) {
 	const media = mediasList[mediaIndex].src;
 	// const title = mediasList[mediaIndex].
-	console.log(mediasList[mediaIndex].title)
+	console.log(mediaToDisplay, mediaIndex, mediasList[mediaIndex].title)
 
 	const mediaElement = photographerTemplate(mediaToDisplay).getLightboxMediaDOM(media);
     
@@ -99,4 +99,26 @@ function lightboxNext(mediasList) {
 	const lightboxModel = photographerTemplate(mediasList[currentIndex]);
 	const mediaLightbox = lightboxModel.getLightboxDOM(currentIndex, mediaElement);
 	lightboxMedia.appendChild(mediaLightbox);
+}
+
+function triggerLightbox() {
+	const articlesList = document.getElementsByClassName("media-article");
+
+	articlesListArray = Array.from(articlesList);
+
+	articlesListArray.forEach((article, i) => {
+		// Getting the media index
+		const index = article.dataset.index;
+
+		// Display lightbox
+		article.firstChild.addEventListener("click", () => {
+			displayLightbox(mediasList[index], index, mediasList);
+		});
+		article.firstChild.addEventListener("keydown", (event) => {
+			if (event.key === "Enter") {
+				displayLightbox(mediasList[index], index, mediasList);
+			}
+		});
+
+	});
 }

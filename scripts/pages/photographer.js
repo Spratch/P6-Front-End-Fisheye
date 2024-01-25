@@ -35,25 +35,11 @@ function filterMedias(media, urlId) {
 }
 
 function displayMedias(photographerMedias) {
-	// DOM elements
-	const portfolioGrid = document.querySelector(".portfolio-grid");
-
 	// Grid construction
 	photographerMedias.forEach((media, i) => {
 		const { getPortfolioDOM } = photographerTemplate(media);
 		const mediasGrid = getPortfolioDOM(i);
-		portfolioGrid.appendChild(mediasGrid);
-
-		// Display lightbox
-		mediasGrid.firstChild.addEventListener("click", () => {
-			displayLightbox(media, i, mediasList);
-		});
-		mediasGrid.firstChild.addEventListener("keydown", (event) => {
-			if (event.key === "Enter") {
-				displayLightbox(media, i, mediasList);
-			}
-		});
-		
+		portfolioGrid.appendChild(mediasGrid);		
 	});
 	updateMediasList();
 }
@@ -109,34 +95,34 @@ function sortMedias(sortType) {
     const button = document.getElementById(sortType);
     changeDropdownTitle(button);
 
-	const mediasList = document.getElementsByClassName("media-article");
-	const portfolioGrid = document.querySelector(".portfolio-grid");
+	const articlesList = document.getElementsByClassName("media-article");
 
-	mediasListArray = Array.from(mediasList);
+	articlesListArray = Array.from(articlesList);
 
 	switch (sortType) {
 		case "sort-popularity":
-			sortedMedias = mediasListArray.sort((a,b) => b.dataset.likes - a.dataset.likes);
+			sortedMedias = articlesListArray.sort((a,b) => b.dataset.likes - a.dataset.likes);
 			console.log("popularity")
 			break;
         case "sort-name":
-            sortedMedias = mediasListArray.sort((a, b) => a.dataset.title.localeCompare(b.dataset.title));
+            sortedMedias = articlesListArray.sort((a, b) => a.dataset.title.localeCompare(b.dataset.title));
 			console.log("name")
             break;
         case "sort-date":
-            sortedMedias = mediasListArray.sort((a, b) => b.dataset.date - a.dataset.date).reverse();
+            sortedMedias = articlesListArray.sort((a, b) => b.dataset.date - a.dataset.date).reverse();
 			console.log("date")
             break;
         default:
             // Default case: no sorting
-            sortedMedias = mediasListArray;
+            sortedMedias = articlesListArray;
 	}
 
 	portfolioGrid.innerHTML = "";
 	sortedMedias.forEach((element, i) => {
+		element.dataset.index = i;
 		element.getElementsByClassName("media-element")[0].tabIndex = i + 4
 		element.getElementsByClassName("portfolio-item__likes")[0].tabIndex = i + 4 + "." + 1;
-		portfolioGrid.appendChild(element)
+		portfolioGrid.appendChild(element);
 	});
 	updateMediasList();
 
