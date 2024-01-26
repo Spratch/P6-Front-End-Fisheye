@@ -1,4 +1,6 @@
-function photographerTemplate(data) {
+/* global createDOMElement */
+
+function photographerTemplate(data) { // eslint-disable-line no-unused-vars
 	let { name, portrait, id, city, country, tagline, price, title, image, video, likes, date } = data;
 
 	const picture = `assets/photographers/${portrait}`;
@@ -56,21 +58,22 @@ function photographerTemplate(data) {
 	}
 
 	// Photographer page media gallery DOM
-	function getPortfolioDOM(tabindex) {
+	function getPortfolioDOM(index) {
+		const tabindex = index + 4;
 		// DOM Elements creation
 		const itemArticle = createDOMElement("article", { class: "media-article", "aria-label": "Vue détaillée"});
 		const mediaElement = getMediaDOM(image);
-		mediaElement.tabIndex = tabindex + 4;
+		mediaElement.tabIndex = tabindex;
 		const infos = createDOMElement("div", { class: "portfolio-item__infos" });
 		const titleElement = createDOMElement("p", { class: "portfolio-item__title" }, title);
-		const likesContainer = createDOMElement("div", { class: "portfolio-item__likes", "tabindex": tabindex + 4 + "." + 1 });
+		const likesContainer = createDOMElement("div", { class: "portfolio-item__likes", "tabindex": tabindex + "." + 1 });
 		const likesNumber = createDOMElement("p", {}, likes);
 		const likesHeart = createDOMElement("i", { class: "fa-regular fa-heart", style: "color: #901C1C" });
 
 		function likeMedia(){
 			// Get DOM Element
 			const totalLikesElement = document.getElementsByClassName("value-likes");
-			totalLikes = parseInt(totalLikesElement[0].innerText);
+			let totalLikes = parseInt(totalLikesElement[0].innerText);
 
 			if (!likesHeart.classList.contains("fa-solid")) {
 				likes++;
@@ -99,6 +102,7 @@ function photographerTemplate(data) {
 		itemArticle.dataset.title = title;
 		itemArticle.dataset.likes = likes;
 		itemArticle.dataset.date = date;
+		itemArticle.dataset.index = index;
 		infos.append(titleElement, likesContainer);
 		likesContainer.append(likesNumber, likesHeart);
 	
@@ -122,7 +126,7 @@ function photographerTemplate(data) {
 
 	function getLightboxMediaDOM(media){
 		// Get the extension
-		const extension = media.substring(media.lastIndexOf('.') + 1, media.length);
+		const extension = media.substring(media.lastIndexOf(".") + 1, media.length);
 		let image = false;
 		if (extension == "webp") {
 			image = true;

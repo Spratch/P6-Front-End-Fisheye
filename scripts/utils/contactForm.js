@@ -1,5 +1,6 @@
+/* global main, modal, body, modalCloseBtn, disableTabindexForPage, modalOpenBtn, enableTabindexForPage, contactForm, first, last, email, message */
 // Open modal
-function displayModal() {
+function displayModal() { // eslint-disable-line no-unused-vars
 	main.setAttribute("aria-hidden", "true"); // Hide main content for Assistive Technologies
 	modal.setAttribute("aria-hidden", "false"); // Show modal for AT
 	body.style.overflow = "hidden"; // Prevent scrolling
@@ -31,7 +32,7 @@ document.addEventListener("keydown", e => {
 	}
 });
 
-function submitForm() {
+function submitForm() { // eslint-disable-line no-unused-vars
 	// Color invalid inputs
 	contactForm.classList.add("submitted");
 

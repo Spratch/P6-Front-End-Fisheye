@@ -1,8 +1,7 @@
+/* global photographerTemplate, lightboxMedia, disableTabindexForPage, main, lightboxModal, body, enableTabindexForPage, mediasList */
+
 function setLightboxMedia(mediaToDisplay, mediaIndex, mediasList) {
 	const media = mediasList[mediaIndex].src;
-	// const title = mediasList[mediaIndex].
-	console.log(mediaToDisplay, mediaIndex, mediasList[mediaIndex].title)
-
 	const mediaElement = photographerTemplate(mediaToDisplay).getLightboxMediaDOM(media);
     
 	resetLightboxMedia();
@@ -12,6 +11,8 @@ function setLightboxMedia(mediaToDisplay, mediaIndex, mediasList) {
 function resetLightboxMedia() {
 	lightboxMedia.innerHTML = "";
 }
+
+let currentIndex = 0;
 
 function displayLightbox(media, i, mediasList) {
 	disableTabindexForPage();
@@ -37,40 +38,40 @@ function displayLightbox(media, i, mediasList) {
 		document.removeEventListener("keydown", keydownHandler);
 		lighboxButtons.removeEventListener("click", lighboxButtonsClick);
 	}
-	  
+
 	const lighboxButtons = document.querySelector(".lightbox__buttons");
 
 	function lighboxButtonsClick(event) {
 		const target = event.target.classList;
 
 		switch (true) {
-			case target.contains("fa-xmark"):
-				closeLightbox();
-				resetLightboxEventListeners();
-				break;
-			case target.contains("fa-chevron-left"):
-				lightboxPrev(mediasList);
-				break;
-			case target.contains("fa-chevron-right"):
-				lightboxNext(mediasList);
-				break;
+		case target.contains("fa-xmark"):
+			closeLightbox();
+			resetLightboxEventListeners();
+			break;
+		case target.contains("fa-chevron-left"):
+			lightboxPrev(mediasList);
+			break;
+		case target.contains("fa-chevron-right"):
+			lightboxNext(mediasList);
+			break;
 		}
 	}
 	lighboxButtons.addEventListener("click", lighboxButtonsClick);
 
 	function keydownHandler(e) {
 		switch (e.key) {
-			case "Escape":
-			case "Esc":
-				closeLightbox();
-				resetLightboxEventListeners();
-				break;
-			case "ArrowLeft":
-				lightboxPrev(mediasList);
-				break;
-			case "ArrowRight":
-				lightboxNext(mediasList);
-				break;
+		case "Escape":
+		case "Esc":
+			closeLightbox();
+			resetLightboxEventListeners();
+			break;
+		case "ArrowLeft":
+			lightboxPrev(mediasList);
+			break;
+		case "ArrowRight":
+			lightboxNext(mediasList);
+			break;
 		}
 	}
 	document.addEventListener("keydown", keydownHandler);
@@ -101,12 +102,12 @@ function lightboxNext(mediasList) {
 	lightboxMedia.appendChild(mediaLightbox);
 }
 
-function triggerLightbox() {
+function triggerLightbox() { // eslint-disable-line no-unused-vars
 	const articlesList = document.getElementsByClassName("media-article");
 
-	articlesListArray = Array.from(articlesList);
+	const articlesListArray = Array.from(articlesList);
 
-	articlesListArray.forEach((article, i) => {
+	articlesListArray.forEach((article) => {
 		// Getting the media index
 		const index = article.dataset.index;
 

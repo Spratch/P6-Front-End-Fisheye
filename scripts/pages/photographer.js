@@ -1,4 +1,4 @@
-/* global photographerTemplate, main, body, currentIndex */
+/* global photographerTemplate, portfolioGrid, updateMediasList */
 
 async function getPhotographers() {
 	// JSON Fetch
@@ -91,36 +91,34 @@ function displayButton(){
 	hiddenButton.classList.remove("hidden");
 }
 
-function sortMedias(sortType) {
-    const button = document.getElementById(sortType);
-    changeDropdownTitle(button);
+function sortMedias(sortType) { // eslint-disable-line no-unused-vars
+	const button = document.getElementById(sortType);
+	changeDropdownTitle(button);
 
 	const articlesList = document.getElementsByClassName("media-article");
 
-	articlesListArray = Array.from(articlesList);
+	const articlesListArray = Array.from(articlesList);
+	let sortedMedias = [];
 
 	switch (sortType) {
-		case "sort-popularity":
-			sortedMedias = articlesListArray.sort((a,b) => b.dataset.likes - a.dataset.likes);
-			console.log("popularity")
-			break;
-        case "sort-name":
-            sortedMedias = articlesListArray.sort((a, b) => a.dataset.title.localeCompare(b.dataset.title));
-			console.log("name")
-            break;
-        case "sort-date":
-            sortedMedias = articlesListArray.sort((a, b) => b.dataset.date - a.dataset.date).reverse();
-			console.log("date")
-            break;
-        default:
-            // Default case: no sorting
-            sortedMedias = articlesListArray;
+	case "sort-popularity":
+		sortedMedias = articlesListArray.sort((a,b) => b.dataset.likes - a.dataset.likes);
+		break;
+	case "sort-name":
+		sortedMedias = articlesListArray.sort((a, b) => a.dataset.title.localeCompare(b.dataset.title));
+		break;
+	case "sort-date":
+		sortedMedias = articlesListArray.sort((a, b) => b.dataset.date - a.dataset.date).reverse();
+		break;
+	default:
+		// Default case: no sorting
+		sortedMedias = articlesListArray;
 	}
 
 	portfolioGrid.innerHTML = "";
 	sortedMedias.forEach((element, i) => {
 		element.dataset.index = i;
-		element.getElementsByClassName("media-element")[0].tabIndex = i + 4
+		element.getElementsByClassName("media-element")[0].tabIndex = i + 4;
 		element.getElementsByClassName("portfolio-item__likes")[0].tabIndex = i + 4 + "." + 1;
 		portfolioGrid.appendChild(element);
 	});
