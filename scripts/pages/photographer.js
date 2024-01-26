@@ -189,7 +189,6 @@ function sortMedias(sortType) { // eslint-disable-line no-unused-vars
 		portfolioGrid.appendChild(element);
 	});
 	updateMediasList();
-
 }
 
 /**

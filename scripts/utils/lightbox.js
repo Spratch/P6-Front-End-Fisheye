@@ -3,7 +3,7 @@
 function setLightboxMedia(mediaToDisplay, mediaIndex, mediasList) {
 	const media = mediasList[mediaIndex].src;
 	const mediaElement = photographerTemplate(mediaToDisplay).getLightboxMediaDOM(media);
-    
+	console.log(media);
 	resetLightboxMedia();
 	return mediaElement;
 }
@@ -23,7 +23,7 @@ let currentIndex = 0;
  */
 function displayLightbox(media, i, mediasList) {
 	disableTabindexForPage();
-
+	
 	main.setAttribute("aria-hidden", "true");
 	lightboxModal.setAttribute("aria-hidden", "false");
 	body.style.overflow = "hidden";
@@ -43,12 +43,12 @@ function displayLightbox(media, i, mediasList) {
 
 	function resetLightboxEventListeners() {
 		document.removeEventListener("keydown", keydownHandler);
-		lighboxButtons.removeEventListener("click", lighboxButtonsClick);
+		lightboxButtons.removeEventListener("click", lightboxButtonsClick);
 	}
 
-	const lighboxButtons = document.querySelector(".lightbox__buttons");
+	const lightboxButtons = document.querySelector(".lightbox__buttons");
 
-	function lighboxButtonsClick(event) {
+	function lightboxButtonsClick(event) {
 		const target = event.target.classList;
 
 		switch (true) {
@@ -64,7 +64,7 @@ function displayLightbox(media, i, mediasList) {
 			break;
 		}
 	}
-	lighboxButtons.addEventListener("click", lighboxButtonsClick);
+	lightboxButtons.addEventListener("click", lightboxButtonsClick);
 
 	function keydownHandler(e) {
 		switch (e.key) {
@@ -110,21 +110,28 @@ function lightboxNext(mediasList) {
 }
 
 function triggerLightbox() { // eslint-disable-line no-unused-vars
+	console.log("triggerLightbox");
 	const articlesList = document.getElementsByClassName("media-article");
-
 	const articlesListArray = Array.from(articlesList);
+
+	function displayLightboxOnTrigger(medialistIndex, index) {
+		console.log("displayLightboxOnTrigger", index);
+		displayLightbox(medialistIndex, index, mediasList);
+	}
 
 	articlesListArray.forEach((article) => {
 		// Getting the media index
 		const index = article.dataset.index;
-
+		article.firstChild.removeEventListener("keydown", displayLightboxOnTrigger);
+		article.firstChild.removeEventListener("click", displayLightboxOnTrigger);
+	
 		// Display lightbox
 		article.firstChild.addEventListener("click", () => {
-			displayLightbox(mediasList[index], index, mediasList);
+			displayLightboxOnTrigger(mediasList[index], index);
 		});
 		article.firstChild.addEventListener("keydown", (event) => {
 			if (event.key === "Enter") {
-				displayLightbox(mediasList[index], index, mediasList);
+				displayLightboxOnTrigger(mediasList[index], index);
 			}
 		});
 
