@@ -1,11 +1,22 @@
 /* global createDOMElement */
 
+/**
+ * Creates a template object for a photographer that includes methods to generate different DOM elements.
+ * 
+ * @param {Object} data - The data object containing photographer's details such as name, portrait, id, etc.
+ * @returns {Object} An object containing methods to create various DOM elements like user card, profile, media items, etc.
+ */
 function photographerTemplate(data) { // eslint-disable-line no-unused-vars
 	let { name, portrait, id, city, country, tagline, price, title, image, video, likes, date } = data;
 
 	const picture = `assets/photographers/${portrait}`;
 
-	// Homepage photographers cards DOM
+	/**
+	 * Creates the DOM elements for the photographer's card on the homepage.
+	 * This includes the photographer's image, name, location, tagline, and pricing.
+	 * 
+	 * @returns {HTMLElement} The article element containing the photographer's card.
+	 */
 	function getUserCardDOM() {
 		// DOM Elements creation
 		const article = createDOMElement("article", { id: `photographer-${id}` });
@@ -23,7 +34,12 @@ function photographerTemplate(data) { // eslint-disable-line no-unused-vars
 		return (article);
 	}
 
-	// Photographer page infos DOM
+	/**
+	 * Creates the DOM elements for the photographer's profile header.
+	 * This includes the photographer's name, location, and tagline.
+	 * 
+	 * @returns {HTMLElement} The div element containing the photographer's profile header.
+	 */
 	function getProfileDOM() {
 		// DOM Elements creation
 		const profile = createDOMElement("div", { class: "photographer-profile" });
@@ -37,13 +53,23 @@ function photographerTemplate(data) { // eslint-disable-line no-unused-vars
 		return (profile);
 	}
 
-	// Photographer page picture DOM
+	/**
+	 * Creates the DOM element for the photographer's profile picture.
+	 * 
+	 * @returns {HTMLElement} The img element for the photographer's profile picture.
+	 */
 	function getProfilePic() {
 		const img = createDOMElement("img", { src: picture, alt: name, class: "profile-picture" });
 		return (img);
 	}
 
-	// Photographer page media generation function
+	/**
+	 * Creates the DOM element for a media item (image or video).
+	 * Handles different media types appropriately.
+	 * 
+	 * @param {string} image - The image file name; if null, a video file is used.
+	 * @returns {HTMLElement} The DOM element for the media item.
+	 */
 	function getMediaDOM(image){
 		// Handle differently media if image or video
 		const file = !image ? video : image;
@@ -57,7 +83,13 @@ function photographerTemplate(data) { // eslint-disable-line no-unused-vars
 		return mediaElement;
 	}
 
-	// Photographer page media gallery DOM
+	/**
+	 * Creates the DOM elements for a media item in the photographer's portfolio.
+	 * This includes the media itself, its title, and likes.
+	 * 
+	 * @param {number} index - The index of the media item in the portfolio.
+	 * @returns {HTMLElement} The article element containing the media item.
+	 */
 	function getPortfolioDOM(index) {
 		const tabindex = index + 4;
 		// DOM Elements creation
@@ -109,6 +141,12 @@ function photographerTemplate(data) { // eslint-disable-line no-unused-vars
 		return itemArticle;
 	}
 
+	/**
+	 * Creates the DOM elements for displaying the total likes and daily price for the photographer.
+	 * 
+	 * @param {number} sumLikes - The total number of likes for the photographer's media.
+	 * @returns {HTMLElement} The div element containing the likes and daily price.
+	 */
 	function getValueDOM(sumLikes) {
 		// DOM Elements creation
 		const valueDiv = createDOMElement("div", { class: "value-container" });
@@ -124,8 +162,15 @@ function photographerTemplate(data) { // eslint-disable-line no-unused-vars
 		return valueDiv;
 	}
 
+	/**
+	 * Creates the DOM element for a media item in the lightbox.
+	 * Handles different media types (image or video) appropriately.
+	 * 
+	 * @param {string} media - The file path of the media item.
+	 * @returns {HTMLElement} The DOM element for the lightbox media item.
+	 */
 	function getLightboxMediaDOM(media){
-		// Get the extension
+		// Get the media file extension
 		const extension = media.substring(media.lastIndexOf(".") + 1, media.length);
 		let image = false;
 		if (extension == "webp") {
@@ -146,6 +191,14 @@ function photographerTemplate(data) { // eslint-disable-line no-unused-vars
 		return mediaElement;
 	}
 
+	/**
+	 * Creates the DOM elements for the lightbox display of a media item.
+	 * This includes the media container and the media title.
+	 * 
+	 * @param {number} i - The index of the media item in the medias list.
+	 * @param {HTMLElement} mediaElement - The DOM element for the media item to display.
+	 * @returns {HTMLElement} The div element containing the lightbox media display.
+	 */
 	function getLightboxDOM(i, mediaElement) {
 		// DOM Elements creation
 		const mediaParent = createDOMElement("div", { class: "lightbox-media-container"});

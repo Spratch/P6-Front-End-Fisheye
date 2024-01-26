@@ -1,5 +1,8 @@
 /* global main, modal, body, modalCloseBtn, disableTabindexForPage, modalOpenBtn, enableTabindexForPage, contactForm, first, last, email, message */
-// Open modal
+
+/**
+ * Displays the contact modal window and performs necessary UI adjustments like hiding the main content and disabling background scroll.
+ */
 function displayModal() { // eslint-disable-line no-unused-vars
 	main.setAttribute("aria-hidden", "true"); // Hide main content for Assistive Technologies
 	modal.setAttribute("aria-hidden", "false"); // Show modal for AT
@@ -8,10 +11,11 @@ function displayModal() { // eslint-disable-line no-unused-vars
 	modalCloseBtn.tabIndex = 0;
 	modalCloseBtn.focus(); // Focus on close button
 	disableTabindexForPage();
-
 }
 
-// Close modal
+/**
+ * Closes the contact modal window and restores the UI to its original state, including enabling background scroll.
+ */
 function closeModal() {
 	main.setAttribute("aria-hidden", "false"); // Show main content for Assistive Technologies
 	modal.setAttribute("aria-hidden", "true"); // Hide modal for AT
@@ -32,6 +36,10 @@ document.addEventListener("keydown", e => {
 	}
 });
 
+/**
+ * Submits the form in the console.
+ * Called by the HTML submit button in the contact form.
+ */
 function submitForm() { // eslint-disable-line no-unused-vars
 	// Color invalid inputs
 	contactForm.classList.add("submitted");
@@ -48,7 +56,7 @@ function submitForm() { // eslint-disable-line no-unused-vars
 	}
 }
 
+// Prevents page reload
 contactForm.addEventListener("submit", (event) => {
-	// prevent default
 	event.preventDefault();
 });

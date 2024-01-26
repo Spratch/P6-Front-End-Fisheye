@@ -14,6 +14,13 @@ function resetLightboxMedia() {
 
 let currentIndex = 0;
 
+/**
+ * Displays the lightbox for a selected media item.
+ * 
+ * @param {Object} media - The media item data to be displayed in the lightbox.
+ * @param {number} i - The index of the media item in the media list.
+ * @param {Array} mediasList - The array of all media items.
+ */
 function displayLightbox(media, i, mediasList) {
 	disableTabindexForPage();
 

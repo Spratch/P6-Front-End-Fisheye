@@ -1,23 +1,42 @@
 /* global photographerTemplate, portfolioGrid, updateMediasList */
 
+/**
+ * Fetches photographers data from the JSON file.
+ * 
+ * @returns {Promise<Object>} A promise that resolves to the JSON data of photographers.
+ */
 async function getPhotographers() {
-	// JSON Fetch
 	const response = await fetch("./data/photographers.json");
 	return response.json();
 }
 
+/**
+ * Retrieves the photographer's ID from the URL query string.
+ * 
+ * @returns {string|null} The photographer's ID if present in the URL, otherwise null.
+ */
 function getUrlId() {
-	// Retrieving the photographer's ID
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
 	return urlParams.get("id");
 }
 
+/**
+ * Finds a photographer from the list based on the provided ID.
+ * 
+ * @param {Array} photographers - The array of photographers.
+ * @param {string} urlId - The ID of the photographer to find.
+ * @returns {Object|null} The photographer object if found, otherwise null.
+ */
 function findPhotographer(photographers, urlId) {
-	// Selection of the photographer based on his ID
-	return photographers.find(item => item.id == urlId);
+	return photographers.find(photographer => photographer.id == urlId);
 }
 
+/**
+ * Displays the header section for a photographer's profile.
+ * 
+ * @param {Object} photographer - The photographer's data used to generate the header.
+ */
 function displayHeader(photographer) {
 	// DOM elements
 	const photographHeader = document.querySelector(".photograph-header");
@@ -29,11 +48,22 @@ function displayHeader(photographer) {
 	photographHeader.appendChild(getProfilePic());
 }
 
+/**
+ * Filters media items based on the photographer's ID.
+ * 
+ * @param {Array} media - The array of all media items from the JSON file.
+ * @param {string} urlId - The ID of the photographer to filter media for.
+ * @returns {Array} An array of media items for the specified photographer.
+ */
 function filterMedias(media, urlId) {
-	// Selection of medias based on the photographer's ID
 	return media.filter(item => item.photographerId == urlId);
 }
 
+/**
+ * Displays filtered media items on the photographer's page.
+ * 
+ * @param {Array} photographerMedias - An array of media items to be displayed.
+ */
 function displayMedias(photographerMedias) {
 	// Grid construction
 	photographerMedias.forEach((media, i) => {
@@ -44,12 +74,23 @@ function displayMedias(photographerMedias) {
 	updateMediasList();
 }
 
+/**
+ * Calculates the total number of likes written in the JSON file for a photographer.
+ * 
+ * @param {Array} medias - An array of media items belonging to the photographer.
+ * @returns {number} The total number of likes across all photographer's media items.
+ */
 function getPhotographerLikes(medias){
-	// Calculate total number of photographer's likes
 	const totalLikes = medias.map(media => media.likes);
 	return totalLikes.reduce((a,b) => a + b, 0);
 }
 
+/**
+ * Displays the value element for a photographer"s profile using his total number of likes.
+ * 
+ * @param {Object} photographer - The photographer's data used to generate the value element.
+ * @param {number} sumLikes - The total number of likes across all photographer's media items.
+ */
 function displayValue(photographer, sumLikes) {
 	// DOM Element
 	const photographerValue = document.querySelector(".photographer-value");
@@ -60,43 +101,65 @@ function displayValue(photographer, sumLikes) {
 }
 
 // Dropdown and sort
+/**
+ * Toggles the visibility of the sorting dropdown element.
+ * This function is called by the HTML button '.dropdown-toggle'.
+ * It adds or removes a class to show or hide the dropdown content.
+ */
 function toggleDropdown(){
 	const dropdown = document.querySelector(".sorting-dropdown");
 	dropdown.classList.toggle("unrolled");
-
 }
 
-function hideButton(button){
-	displayButton();
-	button.classList.add("hidden");
-	button.setAttribute("aria-hidden", "true");
-
-	// Then close dropdown
-	toggleDropdown();
-
-}
-
-function changeDropdownTitle(button){
-	const dropdownTitleElement = document.querySelector(".dropdown-title");
-	dropdownTitleElement.textContent = button.textContent;
-
-	// Then hide button
-	hideButton(button);
-
-}
-
+/**
+ * Displays the currently hidden button when the user changes sorting criterion.
+ */
 function displayButton(){
 	const hiddenButton = document.querySelector(".hidden");
 	hiddenButton.removeAttribute("aria-hidden");
 	hiddenButton.classList.remove("hidden");
 }
 
+/**
+ * Hides the current sorting criterion in the dropdown content.
+ * 
+ * @param {HTMLElement} button - The button HTML element that was triggered by the user.
+ */
+function hideButton(button){
+	// Display hidden button
+	displayButton();
+
+	// Hide current sorting criterion
+	button.classList.add("hidden");
+	button.setAttribute("aria-hidden", "true");
+
+	// Then close dropdown
+	toggleDropdown();
+}
+
+/**
+ * Finds the sorting dropdown element's title and replace its text content by the triggered button's text content.
+ * 
+ * @param {HTMLElement} button - The button HTML element that was triggered by the user.
+ */
+function changeDropdownTitle(button){
+	const dropdownTitleElement = document.querySelector(".dropdown-title");
+	dropdownTitleElement.textContent = button.textContent;
+
+	// Then hide button
+	hideButton(button);
+}
+
+/**
+ * Sorts media items based on the specified criteria.
+ * 
+ * @param {string} sortType - The sorting criterion, ('sort-popularity', 'sort-name', 'sort-date').
+ */
 function sortMedias(sortType) { // eslint-disable-line no-unused-vars
 	const button = document.getElementById(sortType);
 	changeDropdownTitle(button);
 
 	const articlesList = document.getElementsByClassName("media-article");
-
 	const articlesListArray = Array.from(articlesList);
 	let sortedMedias = [];
 
@@ -115,7 +178,10 @@ function sortMedias(sortType) { // eslint-disable-line no-unused-vars
 		sortedMedias = articlesListArray;
 	}
 
+	// Empties the portfolio grid before updating it
 	portfolioGrid.innerHTML = "";
+
+	// Gives new attributes ('data-index' and 'tabindex' to each media, then appends it to the portfolio grid
 	sortedMedias.forEach((element, i) => {
 		element.dataset.index = i;
 		element.getElementsByClassName("media-element")[0].tabIndex = i + 4;
@@ -126,6 +192,9 @@ function sortMedias(sortType) { // eslint-disable-line no-unused-vars
 
 }
 
+/**
+ * Initializes the page by fetching photographers' data, setting up the UI, and handling event listeners.
+ */
 async function init() {
 	const { photographers, media } = await getPhotographers();
 	const urlId = getUrlId();
