@@ -40,7 +40,6 @@ function createDOMElement(tag, attributes = {}, textContent) { // eslint-disable
 
 // Store initial tabindex values
 const initialTabIndexes = new Map();
-
 /**
  * Disables the tabindex for all elements outside the modal (sets tabindex to -1).
  * This is useful for controlling keyboard navigation when a modal is open.
@@ -75,7 +74,6 @@ function enableTabindexForPage() { // eslint-disable-line no-unused-vars
 }
 	
 let mediasList = {};
-
 /**
  * Updates the global 'mediasList' with the current media elements in the document.
  * Iterates through media sources and titles, adding them to 'mediasList'.

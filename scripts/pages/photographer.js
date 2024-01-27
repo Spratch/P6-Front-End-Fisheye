@@ -100,7 +100,6 @@ function displayValue(photographer, sumLikes) {
 	photographerValue.appendChild(getValueDOM(sumLikes));
 }
 
-// Dropdown and sort
 /**
  * Toggles the visibility of the sorting dropdown element.
  * This function is called by the HTML button '.dropdown-toggle'.
