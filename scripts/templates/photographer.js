@@ -134,7 +134,6 @@ function photographerTemplate(data) { // eslint-disable-line no-unused-vars
 		itemArticle.dataset.title = title;
 		itemArticle.dataset.likes = likes;
 		itemArticle.dataset.date = date;
-		itemArticle.dataset.index = index;
 		infos.append(titleElement, likesContainer);
 		likesContainer.append(likesNumber, likesHeart);
 	

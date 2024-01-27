@@ -3,7 +3,6 @@
 function setLightboxMedia(mediaToDisplay, mediaIndex, mediasList) {
 	const media = mediasList[mediaIndex].src;
 	const mediaElement = photographerTemplate(mediaToDisplay).getLightboxMediaDOM(media);
-	console.log(media);
 	resetLightboxMedia();
 	return mediaElement;
 }
@@ -43,12 +42,12 @@ function displayLightbox(media, i, mediasList) {
 
 	function resetLightboxEventListeners() {
 		document.removeEventListener("keydown", keydownHandler);
-		lightboxButtons.removeEventListener("click", lightboxButtonsClick);
+		lightboxButtons.removeEventListener("click", clickHandler);
 	}
 
 	const lightboxButtons = document.querySelector(".lightbox__buttons");
 
-	function lightboxButtonsClick(event) {
+	function clickHandler(event) {
 		const target = event.target.classList;
 
 		switch (true) {
@@ -64,10 +63,10 @@ function displayLightbox(media, i, mediasList) {
 			break;
 		}
 	}
-	lightboxButtons.addEventListener("click", lightboxButtonsClick);
+	lightboxButtons.addEventListener("click", clickHandler);
 
-	function keydownHandler(e) {
-		switch (e.key) {
+	function keydownHandler(event) {
+		switch (event.key) {
 		case "Escape":
 		case "Esc":
 			closeLightbox();
@@ -114,26 +113,35 @@ function triggerLightbox() { // eslint-disable-line no-unused-vars
 	const articlesList = document.getElementsByClassName("media-article");
 	const articlesListArray = Array.from(articlesList);
 
-	function displayLightboxOnTrigger(medialistIndex, index) {
-		console.log("displayLightboxOnTrigger", index);
-		displayLightbox(medialistIndex, index, mediasList);
-	}
+	articlesListArray.forEach((article, index) => {
+		const mediaElement = article.firstChild;
 
-	articlesListArray.forEach((article) => {
-		// Getting the media index
-		const index = article.dataset.index;
-		article.firstChild.removeEventListener("keydown", displayLightboxOnTrigger);
-		article.firstChild.removeEventListener("click", displayLightboxOnTrigger);
-	
-		// Display lightbox
-		article.firstChild.addEventListener("click", () => {
-			displayLightboxOnTrigger(mediasList[index], index);
-		});
-		article.firstChild.addEventListener("keydown", (event) => {
+		// Ensure the dataset index is set correctly
+		mediaElement.dataset.index = index;
+
+		// Remove existing event handlers if present
+		if (mediaElement._clickHandler) {
+			mediaElement.removeEventListener("click", mediaElement._clickHandler);
+		}
+		if (mediaElement._keydownHandler) {
+			mediaElement.removeEventListener("keydown", mediaElement._keydownHandler);
+		}
+
+		// Create new event handlers
+		mediaElement._clickHandler = function() {
+			const mediaIndex = this.dataset.index;
+			displayLightbox(mediasList[mediaIndex], parseInt(mediaIndex), mediasList);
+
+		};
+		mediaElement._keydownHandler = function(event) {
 			if (event.key === "Enter") {
-				displayLightboxOnTrigger(mediasList[index], index);
+				const mediaIndex = this.dataset.index;
+				displayLightbox(mediasList[mediaIndex], parseInt(mediaIndex), mediasList);
 			}
-		});
+		};
 
+		// Add event handlers
+		mediaElement.addEventListener("click", mediaElement._clickHandler);
+		mediaElement.addEventListener("keydown", mediaElement._keydownHandler);
 	});
 }
