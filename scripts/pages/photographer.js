@@ -106,8 +106,11 @@ function displayValue(photographer, sumLikes) {
  * It adds or removes a class to show or hide the dropdown content.
  */
 function toggleDropdown(){
-	const dropdown = document.querySelector(".sorting-dropdown");
-	dropdown.classList.toggle("unrolled");
+	const toggleDropdownElement = document.querySelector(".sorting-dropdown");
+	toggleDropdownElement.classList.toggle("unrolled");
+
+	const dropdownButton = document.querySelector(".dropdown-toggle");
+	dropdownButton.toggleAttribute("aria-expanded");
 }
 
 /**

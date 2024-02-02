@@ -177,6 +177,9 @@ form.submitted input:invalid, form.submitted textarea:invalid{
             opacity: 1;
             pointer-events: all;
         }
+        & li button{
+            display: flex;
+        }
     }
 }
 .sorting-dropdown button{
@@ -193,6 +196,9 @@ form.submitted input:invalid, form.submitted textarea:invalid{
     gap: 18px;
     align-items: center;
     text-align: left;
+}
+.sorting-dropdown li button{
+    display: none;
 }
 
 .sorting-dropdown button:hover{

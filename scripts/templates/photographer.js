@@ -98,7 +98,7 @@ function photographerTemplate(data) { // eslint-disable-line no-unused-vars
 		mediaElement.tabIndex = tabindex;
 		const infos = createDOMElement("div", { class: "portfolio-item__infos" });
 		const titleElement = createDOMElement("p", { class: "portfolio-item__title" }, title);
-		const likesContainer = createDOMElement("div", { class: "portfolio-item__likes", "tabindex": tabindex + "." + 1 });
+		const likesContainer = createDOMElement("div", { "aria-label": `${likes} mentions j'aime`, class: "portfolio-item__likes", "tabindex": tabindex + "." + 1 });
 		const likesNumber = createDOMElement("p", {}, likes);
 		const likesHeart = createDOMElement("i", { class: "fa-regular fa-heart", style: "color: #901C1C" });
 
@@ -148,8 +148,8 @@ function photographerTemplate(data) { // eslint-disable-line no-unused-vars
 	 */
 	function getValueDOM(sumLikes) {
 		// DOM Elements creation
-		const valueDiv = createDOMElement("div", { class: "value-container" });
-		const likesContainer = createDOMElement("div", {class: "likes-container"});
+		const valueDiv = createDOMElement("div", { class: "value-container", "aria-label": `${sumLikes} mentions j'aime, tarif de ${price}€ par jour` });
+		const likesContainer = createDOMElement("div", {class: "likes-container" });
 		const likesNumber = createDOMElement("p", { class: "value-likes" }, sumLikes);
 		const likesHeart = createDOMElement("i", { class: "fa-solid fa-heart", style: "color: black" });
 		const dailyPrice = createDOMElement("p", {}, `${price}€ / jour`);

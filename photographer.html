@@ -22,17 +22,31 @@
       <div class="photographer-portfolio">
         <div class="sorting">Trier par 
           <div class="sorting-dropdown">
-            <button class="dropdown-toggle" onclick="toggleDropdown()"><span class="dropdown-title" tabindex="3">Popularité</span><i class="fa-solid fa-chevron-down"></i></button>
-            <ul class="dropdown-list">
-              <li id="sort-popularity" class="hidden" aria-hidden="true" tabindex="3.1"><button onclick="sortMedias('sort-popularity')"><span class="sort-name">Popularité</span></button></li>
-              <li id="sort-name"><button onclick="sortMedias('sort-name')" tabindex="3.2"><span class="sort-name">Titre</span></button></li>
-              <li id="sort-date"><button onclick="sortMedias('sort-date')" tabindex="3.3"><span class="sort-name">Date</span></button></li>
+            <button class="dropdown-toggle" role="menu" aria-label="Trier la galerie de médias" onclick="toggleDropdown()">
+              <span class="dropdown-title" tabindex="3">Popularité</span><i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <ul class="dropdown-list" aria-hidden="true">
+              <li id="sort-popularity" class="hidden" aria-hidden="true" tabindex="3.1">
+                <button role="menuitem" aria-label="Trier par popularité" onclick="sortMedias('sort-popularity')">
+                  <span class="sort-name">Popularité</span>
+                </button>
+              </li>
+              <li id="sort-name" aria-hidden="true">
+                <button role="menuitem" aria-label="Trier par titre" onclick="sortMedias('sort-name')" tabindex="3.2">
+                  <span class="sort-name">Titre</span>
+                </button>
+              </li>
+              <li id="sort-date" aria-hidden="true">
+                <button role="menuitem" aria-label="Trier par date" onclick="sortMedias('sort-date')" tabindex="3.3">
+                  <span class="sort-name">Date</span>
+                </button>
+              </li>
             </ul>
         </div>
         </div>
         <div class="portfolio-grid"></div>
       </div>
-      <div class="photographer-value"></div>
+      <div class="photographer-value" tabindex="2.1"></div>
     </main>
 
     <div id="contact_modal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
