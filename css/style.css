@@ -70,7 +70,7 @@ h1 {
     height: 200px;
     width: 200px;
     object-fit: cover;
-    mask-image: url(/assets/avatar-mask.png);
+    mask-image: url(assets/avatar-mask.png);
     mask-size: 100%;
 }
 
