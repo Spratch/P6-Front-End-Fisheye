@@ -30,7 +30,7 @@
     max-width: 200px;
     aspect-ratio: 1;
     object-fit: cover;
-    mask-image: url(/assets/avatar-mask.png);
+    mask-image: url(../assets/avatar-mask.png);
     mask-size: 100%;
 }
 
