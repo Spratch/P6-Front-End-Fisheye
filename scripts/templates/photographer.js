@@ -111,10 +111,12 @@ function photographerTemplate(data) { // eslint-disable-line no-unused-vars
 				likes++;
 				totalLikes++;
 				totalLikesElement[0].innerText = totalLikes;
+				itemArticle.dataset.likes = likes;
 			} else {
 				likes--;
 				totalLikes--;
 				totalLikesElement[0].innerText = totalLikes;
+				itemArticle.dataset.likes = likes;
 			}
 
 			likesHeart.classList.toggle("fa-regular");
